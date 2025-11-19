@@ -1,0 +1,276 @@
+---
+title: "Aboveground biomass in LTFEM plots"
+output:
+    html_document:
+        toc: true
+        toc_float:
+            collapsed: false
+        toc_depth: 3
+        code_folding: hide
+        df_print: kable
+params:
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(BIOMASS)
+library(ggplot2)
+```
+
+# Data
+
+```{r load data}
+load("../LTFEM_Veg/data/classified/dataProducts/forLTFEM_Veg_AGB/forLTFEM_Veg_AGB.RData")
+```
+
+Data from WYK plots are from surveys in 2022.
+
+Data from NSSF plots are from surveys in 2020.
+
+Data from NatureParks and Mandai plots are from surveys in 2023.
+
+# Height-DBH models {.tabset}
+
+```{r fit mods}
+plotSets <- c("WYK", "NatureParks", "NSSF")
+mods_HD <- lapply(plotSets, function(s) {
+    list(nls_LL = nls(height_avg ~ a*DBH^b, data = treeHeights[[s]], start = list(a=exp(1), b = 0.5)),
+         nls_WB = nls(height_avg ~ a*(1-exp(-b*DBH^c)), data = treeHeights[[s]], start = list(a=44,b=0.05,c=0.8)),
+         nls_MM = nls(height_avg ~ (a*DBH)/(b + DBH), data = treeHeights[[s]], start = list(a=48, b = 38)))
+})
+names(mods_HD) <- plotSets
+
+mods_HD_aictab <- lapply(mods_HD, function(m) {
+    AICcmodavg::aictab(m)
+})
+
+DBH_minmax <- lapply(treeHeights, function(df) range(df$DBH, na.rm = TRUE))
+```
+
+WYK plots:
+```{r}
+mods_HD_aictab$WYK %>%
+  data.frame(row.names = NULL) %>%
+  select(-c(AICc, Cum.Wt, LL)) %>%
+  rename(Model = Modnames, 
+         k = K,
+         "Δ AICc" = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)
+```
+
+Nature Parks:
+```{r}
+mods_HD_aictab$NatureParks %>%
+  data.frame(row.names = NULL) %>%
+  select(-c(AICc, Cum.Wt, LL)) %>%
+  rename(Model = Modnames, 
+         k = K,
+         "Δ AICc" = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)
+```
+
+Nee Soon:
+```{r}
+mods_HD_aictab$NSSF %>%
+  data.frame(row.names = NULL) %>%
+  select(-c(AICc, Cum.Wt, LL)) %>%
+  rename(Model = Modnames, 
+         k = K,
+         "Δ AICc" = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)
+```
+
+## Power (or 'log-log') model
+
+$H = a D^b$
+
+(which can be linearised to $\log H = a' + b \log D$ where $a' = \log a$)
+
+where H is the height of the tree in metres and D is the diameter at the point of measurement in cm.
+
+```{r log-log parameters}
+sapply(mods_HD, function(m) {
+    m$nls_LL$m$getPars()
+}) %>%
+    t() %>%
+    data.frame() %>%
+    rownames_to_column(var = "Plot set")
+```
+
+```{r plot log-log, warning=FALSE}
+mods_HD_pred_LL <- lapply(plotSets, function(s) {
+    D_new <- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_LL,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_LL) <- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "darkgreen") +
+    geom_line(data = mods_HD_pred_LL[["WYK"]],
+              mapping = aes(x = D, y = fit),
+              color = "darkgreen") +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "red") +
+    geom_line(data = mods_HD_pred_LL[["NatureParks"]],
+              mapping = aes(x = D, y = fit),
+              color = "red") +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "blue") +
+    geom_line(data = mods_HD_pred_LL[["NSSF"]],
+              mapping = aes(x = D, y = fit),
+              color = "blue") +
+    scale_y_continuous(trans = "log10") +
+    scale_x_continuous(trans = "log10") +
+    labs(x = "DBH (cm)", y = "Height (m)")
+```
+
+## Weilbull
+
+Not used for calculations here but fitted for information.
+
+$H = \alpha (1 - e^{-(D/\beta)^\gamma})$
+
+where H is the height of the tree in metres and D is the diameter at the point of measurement in cm.
+
+```{r weibull parameters}
+sapply(mods_HD, function(m) {
+    m$nls_WB$m$getPars()
+}) %>%
+    t() %>%
+    data.frame() %>%
+    rownames_to_column(var = "Plot set") %>%
+    rename(`$\\alpha$` = "a",
+           "$\\beta$" = "b",
+           "$\\gamma$" = "c") %>%
+    knitr::kable()
+```
+
+```{r plot weibull, warning=FALSE}
+mods_HD_pred_WB <- lapply(plotSets, function(s) {
+    D_new <- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_WB,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_WB) <- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "darkgreen") +
+    geom_line(data = mods_HD_pred_WB[["WYK"]],
+              mapping = aes(x = D, y = fit),
+              color = "darkgreen") +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "red") +
+    geom_line(data = mods_HD_pred_WB[["NatureParks"]],
+              mapping = aes(x = D, y = fit),
+              color = "red") +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "blue") +
+    geom_line(data = mods_HD_pred_WB[["NSSF"]],
+              mapping = aes(x = D, y = fit),
+              color = "blue") +
+    scale_y_continuous(trans = "log10") +
+    scale_x_continuous(trans = "log10") +
+    labs(x = "DBH (cm)", y = "Height (m)")
+```
+
+## Michaelis-Menten
+
+Not used for calculations here but fitted for information.
+
+$H = (A \times D)/(B + D)$
+
+where H is the height of the tree in metres and D is the diameter at the point of measurement in cm.
+
+```{r M-M parameters}
+sapply(mods_HD, function(m) {
+    m$nls_MM$m$getPars()
+}) %>%
+    t() %>%
+    data.frame() %>%
+    rownames_to_column(var = "Plot set") %>%
+    rename(A = a, B = b)
+```
+
+```{r plot M-M, warning=FALSE}
+mods_HD_pred_MM <- lapply(plotSets, function(s) {
+    D_new <- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_MM,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_MM) <- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "darkgreen") +
+    geom_line(data = mods_HD_pred_MM[["WYK"]],
+              mapping = aes(x = D, y = fit),
+              color = "darkgreen") +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "red") +
+    geom_line(data = mods_HD_pred_MM[["NatureParks"]],
+              mapping = aes(x = D, y = fit),
+              color = "red") +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = "blue") +
+    geom_line(data = mods_HD_pred_MM[["NSSF"]],
+              mapping = aes(x = D, y = fit),
+              color = "blue") +
+    scale_y_continuous(trans = "log10") +
+    scale_x_continuous(trans = "log10") +
+    labs(x = "DBH (cm)", y = "Height (m)")
+```
+
+# Calculate aboveground biomass
+
+```{r}
+source("../LTFEM_Veg_AGB/scripts/veg_biomass.R")
+```
+
+```{r print AGB table}
+knitr::kable(plots_AGBsum, "html") %>%
+    kableExtra::kable_styling("striped") %>%
+    kableExtra::scroll_box(height = "500px", width = "100%")
+```
+
+Note: there were no big trees in AQ5.
+
+```{r plot tree vs bigtree, warning=FALSE}
+ggplot(data = plots_AGBsum) +
+    geom_point(mapping = aes(y = trees, x = bigTrees, col = plotSet)) +
+    scale_y_continuous(trans = "log10") +
+    scale_x_continuous(trans = "log10") +
+    geom_abline(intercept = 0, slope = 1)
+```

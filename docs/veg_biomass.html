@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Aboveground biomass in LTFEM plots</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Aboveground biomass in LTFEM plots</h1>
+
+</div>
+
+
+<div id="data" class="section level1">
+<h1>Data</h1>
+<pre class="r"><code>load(&quot;../LTFEM_Veg/data/classified/dataProducts/forLTFEM_Veg_AGB/forLTFEM_Veg_AGB.RData&quot;)</code></pre>
+<p>Data from WYK plots are from surveys in 2022.</p>
+<p>Data from NSSF plots are from surveys in 2020.</p>
+<p>Data from NatureParks and Mandai plots are from surveys in 2023.</p>
+</div>
+<div id="height-dbh-models" class="section level1 tabset">
+<h1 class="tabset">Height-DBH models</h1>
+<pre class="r"><code>plotSets &lt;- c(&quot;WYK&quot;, &quot;NatureParks&quot;, &quot;NSSF&quot;)
+mods_HD &lt;- lapply(plotSets, function(s) {
+    list(nls_LL = nls(height_avg ~ a*DBH^b, data = treeHeights[[s]], start = list(a=exp(1), b = 0.5)),
+         nls_WB = nls(height_avg ~ a*(1-exp(-b*DBH^c)), data = treeHeights[[s]], start = list(a=44,b=0.05,c=0.8)),
+         nls_MM = nls(height_avg ~ (a*DBH)/(b + DBH), data = treeHeights[[s]], start = list(a=48, b = 38)))
+})
+names(mods_HD) &lt;- plotSets
+
+mods_HD_aictab &lt;- lapply(mods_HD, function(m) {
+    AICcmodavg::aictab(m)
+})
+
+DBH_minmax &lt;- lapply(treeHeights, function(df) range(df$DBH, na.rm = TRUE))</code></pre>
+<p>WYK plots:</p>
+<pre class="r"><code>mods_HD_aictab$WYK %&gt;%
+  data.frame(row.names = NULL) %&gt;%
+  select(-c(AICc, Cum.Wt, LL)) %&gt;%
+  rename(Model = Modnames, 
+         k = K,
+         &quot;Δ AICc&quot; = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">k</th>
+<th align="right">Δ AICc</th>
+<th align="right">L</th>
+<th align="right">w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">nls_WB</td>
+<td align="right">4</td>
+<td align="right">0.000000</td>
+<td align="right">1.0000000</td>
+<td align="right">0.5135824</td>
+</tr>
+<tr class="even">
+<td align="left">nls_LL</td>
+<td align="right">3</td>
+<td align="right">1.417049</td>
+<td align="right">0.4923701</td>
+<td align="right">0.2528726</td>
+</tr>
+<tr class="odd">
+<td align="left">nls_MM</td>
+<td align="right">3</td>
+<td align="right">1.576072</td>
+<td align="right">0.4547370</td>
+<td align="right">0.2335449</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Nature Parks:</p>
+<pre class="r"><code>mods_HD_aictab$NatureParks %&gt;%
+  data.frame(row.names = NULL) %&gt;%
+  select(-c(AICc, Cum.Wt, LL)) %&gt;%
+  rename(Model = Modnames, 
+         k = K,
+         &quot;Δ AICc&quot; = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">k</th>
+<th align="right">Δ AICc</th>
+<th align="right">L</th>
+<th align="right">w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">nls_MM</td>
+<td align="right">3</td>
+<td align="right">0.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">0.4249602</td>
+</tr>
+<tr class="even">
+<td align="left">nls_LL</td>
+<td align="right">3</td>
+<td align="right">0.2032201</td>
+<td align="right">0.9033817</td>
+<td align="right">0.3839012</td>
+</tr>
+<tr class="odd">
+<td align="left">nls_WB</td>
+<td align="right">4</td>
+<td align="right">1.5979933</td>
+<td align="right">0.4497800</td>
+<td align="right">0.1911386</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Nee Soon:</p>
+<pre class="r"><code>mods_HD_aictab$NSSF %&gt;%
+  data.frame(row.names = NULL) %&gt;%
+  select(-c(AICc, Cum.Wt, LL)) %&gt;%
+  rename(Model = Modnames, 
+         k = K,
+         &quot;Δ AICc&quot; = Delta_AICc,
+         L = ModelLik, 
+         w = AICcWt)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">k</th>
+<th align="right">Δ AICc</th>
+<th align="right">L</th>
+<th align="right">w</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">nls_WB</td>
+<td align="right">4</td>
+<td align="right">0.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">0.4029002</td>
+</tr>
+<tr class="even">
+<td align="left">nls_MM</td>
+<td align="right">3</td>
+<td align="right">0.0700559</td>
+<td align="right">0.9655784</td>
+<td align="right">0.3890318</td>
+</tr>
+<tr class="odd">
+<td align="left">nls_LL</td>
+<td align="right">3</td>
+<td align="right">1.3216475</td>
+<td align="right">0.5164257</td>
+<td align="right">0.2080680</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="power-or-log-log-model" class="section level2">
+<h2>Power (or ‘log-log’) model</h2>
+<p><span class="math inline">\(H = a D^b\)</span></p>
+<p>(which can be linearised to <span class="math inline">\(\log H =
+a&#39; + b \log D\)</span> where <span class="math inline">\(a&#39; =
+\log a\)</span>)</p>
+<p>where H is the height of the tree in metres and D is the diameter at
+the point of measurement in cm.</p>
+<pre class="r"><code>sapply(mods_HD, function(m) {
+    m$nls_LL$m$getPars()
+}) %&gt;%
+    t() %&gt;%
+    data.frame() %&gt;%
+    rownames_to_column(var = &quot;Plot set&quot;)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Plot set</th>
+<th align="right">a</th>
+<th align="right">b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">WYK</td>
+<td align="right">3.445676</td>
+<td align="right">0.5243473</td>
+</tr>
+<tr class="even">
+<td align="left">NatureParks</td>
+<td align="right">2.463684</td>
+<td align="right">0.5769609</td>
+</tr>
+<tr class="odd">
+<td align="left">NSSF</td>
+<td align="right">3.567342</td>
+<td align="right">0.4997321</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>mods_HD_pred_LL &lt;- lapply(plotSets, function(s) {
+    D_new &lt;- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_LL,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_LL) &lt;- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;darkgreen&quot;) +
+    geom_line(data = mods_HD_pred_LL[[&quot;WYK&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;darkgreen&quot;) +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;red&quot;) +
+    geom_line(data = mods_HD_pred_LL[[&quot;NatureParks&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;red&quot;) +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;blue&quot;) +
+    geom_line(data = mods_HD_pred_LL[[&quot;NSSF&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;blue&quot;) +
+    scale_y_continuous(trans = &quot;log10&quot;) +
+    scale_x_continuous(trans = &quot;log10&quot;) +
+    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<p><img src="veg_biomass_files/figure-html/plot%20log-log-1.png" width="672" /></p>
+</div>
+<div id="weilbull" class="section level2">
+<h2>Weilbull</h2>
+<p>Not used for calculations here but fitted for information.</p>
+<p><span class="math inline">\(H = \alpha (1 -
+e^{-(D/\beta)^\gamma})\)</span></p>
+<p>where H is the height of the tree in metres and D is the diameter at
+the point of measurement in cm.</p>
+<pre class="r"><code>sapply(mods_HD, function(m) {
+    m$nls_WB$m$getPars()
+}) %&gt;%
+    t() %&gt;%
+    data.frame() %&gt;%
+    rownames_to_column(var = &quot;Plot set&quot;) %&gt;%
+    rename(`$\\alpha$` = &quot;a&quot;,
+           &quot;$\\beta$&quot; = &quot;b&quot;,
+           &quot;$\\gamma$&quot; = &quot;c&quot;) %&gt;%
+    knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Plot set</th>
+<th align="right"><span class="math inline">\(\alpha\)</span></th>
+<th align="right"><span class="math inline">\(\beta\)</span></th>
+<th align="right"><span class="math inline">\(\gamma\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">WYK</td>
+<td align="right">43.90884</td>
+<td align="right">0.0585514</td>
+<td align="right">0.7061825</td>
+</tr>
+<tr class="even">
+<td align="left">NatureParks</td>
+<td align="right">41.55518</td>
+<td align="right">0.0446820</td>
+<td align="right">0.7450690</td>
+</tr>
+<tr class="odd">
+<td align="left">NSSF</td>
+<td align="right">47.47136</td>
+<td align="right">0.0447680</td>
+<td align="right">0.7333806</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mods_HD_pred_WB &lt;- lapply(plotSets, function(s) {
+    D_new &lt;- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_WB,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_WB) &lt;- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;darkgreen&quot;) +
+    geom_line(data = mods_HD_pred_WB[[&quot;WYK&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;darkgreen&quot;) +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;red&quot;) +
+    geom_line(data = mods_HD_pred_WB[[&quot;NatureParks&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;red&quot;) +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;blue&quot;) +
+    geom_line(data = mods_HD_pred_WB[[&quot;NSSF&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;blue&quot;) +
+    scale_y_continuous(trans = &quot;log10&quot;) +
+    scale_x_continuous(trans = &quot;log10&quot;) +
+    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<p><img src="veg_biomass_files/figure-html/plot%20weibull-1.png" width="672" /></p>
+</div>
+<div id="michaelis-menten" class="section level2">
+<h2>Michaelis-Menten</h2>
+<p>Not used for calculations here but fitted for information.</p>
+<p><span class="math inline">\(H = (A \times D)/(B + D)\)</span></p>
+<p>where H is the height of the tree in metres and D is the diameter at
+the point of measurement in cm.</p>
+<pre class="r"><code>sapply(mods_HD, function(m) {
+    m$nls_MM$m$getPars()
+}) %&gt;%
+    t() %&gt;%
+    data.frame() %&gt;%
+    rownames_to_column(var = &quot;Plot set&quot;) %&gt;%
+    rename(A = a, B = b)</code></pre>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Plot set</th>
+<th align="right">A</th>
+<th align="right">B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">WYK</td>
+<td align="right">39.45488</td>
+<td align="right">25.65579</td>
+</tr>
+<tr class="even">
+<td align="left">NatureParks</td>
+<td align="right">37.91217</td>
+<td align="right">32.36861</td>
+</tr>
+<tr class="odd">
+<td align="left">NSSF</td>
+<td align="right">47.04560</td>
+<td align="right">40.06679</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>mods_HD_pred_MM &lt;- lapply(plotSets, function(s) {
+    D_new &lt;- seq(DBH_minmax[[s]][1],
+                 DBH_minmax[[s]][2],
+                 length.out = 1000)
+    
+    data.frame(D = D_new,
+               fit = predict(mods_HD[[s]]$nls_MM,
+                        newdata = data.frame(DBH = D_new)))
+})
+names(mods_HD_pred_MM) &lt;- plotSets
+
+ggplot() +
+    theme_classic() +
+    geom_point(data = treeHeights$WYK,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;darkgreen&quot;) +
+    geom_line(data = mods_HD_pred_MM[[&quot;WYK&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;darkgreen&quot;) +
+    geom_point(data = treeHeights$NatureParks,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;red&quot;) +
+    geom_line(data = mods_HD_pred_MM[[&quot;NatureParks&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;red&quot;) +
+    geom_point(data = treeHeights$NSSF,
+               mapping = aes(x = DBH, y = height_avg),
+               color = &quot;blue&quot;) +
+    geom_line(data = mods_HD_pred_MM[[&quot;NSSF&quot;]],
+              mapping = aes(x = D, y = fit),
+              color = &quot;blue&quot;) +
+    scale_y_continuous(trans = &quot;log10&quot;) +
+    scale_x_continuous(trans = &quot;log10&quot;) +
+    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<p><img src="veg_biomass_files/figure-html/plot%20M-M-1.png" width="672" /></p>
+</div>
+</div>
+<div id="calculate-aboveground-biomass" class="section level1">
+<h1>Calculate aboveground biomass</h1>
+<pre class="r"><code>source(&quot;../LTFEM_Veg_AGB/scripts/veg_biomass.R&quot;)</code></pre>
+<pre><code>## Warning in par(oldpar): calling par(new=TRUE) with no plot
+## Warning in par(oldpar): calling par(new=TRUE) with no plot</code></pre>
+<pre><code>## The reference dataset contains 16467 wood density values</code></pre>
+<pre><code>## Your taxonomic table contains 568 taxa</code></pre>
+<pre><code>## The reference dataset contains 16467 wood density values</code></pre>
+<pre><code>## Your taxonomic table contains 269 taxa</code></pre>
+<pre class="r"><code>knitr::kable(plots_AGBsum, &quot;html&quot;) %&gt;%
+    kableExtra::kable_styling(&quot;striped&quot;) %&gt;%
+    kableExtra::scroll_box(height = &quot;500px&quot;, width = &quot;100%&quot;)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+plotID
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+trees
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+bigTrees
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+plotSet
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AQ1
+</td>
+<td style="text-align:right;">
+168.76308
+</td>
+<td style="text-align:right;">
+56.524670
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ2
+</td>
+<td style="text-align:right;">
+114.28906
+</td>
+<td style="text-align:right;">
+25.882724
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ3
+</td>
+<td style="text-align:right;">
+138.68224
+</td>
+<td style="text-align:right;">
+76.103103
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ4
+</td>
+<td style="text-align:right;">
+222.01711
+</td>
+<td style="text-align:right;">
+55.287869
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ5
+</td>
+<td style="text-align:right;">
+108.77621
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ6
+</td>
+<td style="text-align:right;">
+261.53009
+</td>
+<td style="text-align:right;">
+176.039038
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AQ7
+</td>
+<td style="text-align:right;">
+118.75840
+</td>
+<td style="text-align:right;">
+79.754197
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBN1
+</td>
+<td style="text-align:right;">
+123.81603
+</td>
+<td style="text-align:right;">
+136.893086
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBN2
+</td>
+<td style="text-align:right;">
+128.20371
+</td>
+<td style="text-align:right;">
+213.949394
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBN3
+</td>
+<td style="text-align:right;">
+870.04069
+</td>
+<td style="text-align:right;">
+419.032141
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBN4
+</td>
+<td style="text-align:right;">
+310.92692
+</td>
+<td style="text-align:right;">
+123.429420
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBN5
+</td>
+<td style="text-align:right;">
+106.50115
+</td>
+<td style="text-align:right;">
+72.322744
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBT1
+</td>
+<td style="text-align:right;">
+148.40721
+</td>
+<td style="text-align:right;">
+143.401934
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBT2
+</td>
+<td style="text-align:right;">
+143.88328
+</td>
+<td style="text-align:right;">
+131.373639
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBT3
+</td>
+<td style="text-align:right;">
+270.71848
+</td>
+<td style="text-align:right;">
+77.993642
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBT4
+</td>
+<td style="text-align:right;">
+113.13407
+</td>
+<td style="text-align:right;">
+92.375619
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BBT5
+</td>
+<td style="text-align:right;">
+243.22769
+</td>
+<td style="text-align:right;">
+124.542606
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GA1
+</td>
+<td style="text-align:right;">
+201.43357
+</td>
+<td style="text-align:right;">
+106.369569
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GA2
+</td>
+<td style="text-align:right;">
+160.03259
+</td>
+<td style="text-align:right;">
+67.844372
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GA3
+</td>
+<td style="text-align:right;">
+202.20431
+</td>
+<td style="text-align:right;">
+189.818971
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GA4
+</td>
+<td style="text-align:right;">
+144.34307
+</td>
+<td style="text-align:right;">
+53.373039
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GA5
+</td>
+<td style="text-align:right;">
+162.80153
+</td>
+<td style="text-align:right;">
+64.327095
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HQ1
+</td>
+<td style="text-align:right;">
+108.08933
+</td>
+<td style="text-align:right;">
+89.300979
+</td>
+<td style="text-align:left;">
+Mandai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:right;">
+197.34085
+</td>
+<td style="text-align:right;">
+46.919991
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q10
+</td>
+<td style="text-align:right;">
+113.03175
+</td>
+<td style="text-align:right;">
+27.592775
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q101
+</td>
+<td style="text-align:right;">
+171.07465
+</td>
+<td style="text-align:right;">
+39.043477
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q102
+</td>
+<td style="text-align:right;">
+31.21174
+</td>
+<td style="text-align:right;">
+242.527247
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q104
+</td>
+<td style="text-align:right;">
+224.02435
+</td>
+<td style="text-align:right;">
+41.386066
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q105
+</td>
+<td style="text-align:right;">
+158.57057
+</td>
+<td style="text-align:right;">
+51.052289
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q107
+</td>
+<td style="text-align:right;">
+146.75948
+</td>
+<td style="text-align:right;">
+95.193229
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q109
+</td>
+<td style="text-align:right;">
+202.22742
+</td>
+<td style="text-align:right;">
+76.233718
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q111
+</td>
+<td style="text-align:right;">
+94.81840
+</td>
+<td style="text-align:right;">
+13.855673
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q112
+</td>
+<td style="text-align:right;">
+1391.83781
+</td>
+<td style="text-align:right;">
+621.642245
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q2
+</td>
+<td style="text-align:right;">
+84.42926
+</td>
+<td style="text-align:right;">
+45.279447
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q203a
+</td>
+<td style="text-align:right;">
+173.52439
+</td>
+<td style="text-align:right;">
+180.194587
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q206
+</td>
+<td style="text-align:right;">
+113.94121
+</td>
+<td style="text-align:right;">
+62.708773
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q208
+</td>
+<td style="text-align:right;">
+188.32439
+</td>
+<td style="text-align:right;">
+52.735904
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q209
+</td>
+<td style="text-align:right;">
+141.73692
+</td>
+<td style="text-align:right;">
+8.804949
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q213
+</td>
+<td style="text-align:right;">
+138.54019
+</td>
+<td style="text-align:right;">
+63.812413
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q217
+</td>
+<td style="text-align:right;">
+139.50190
+</td>
+<td style="text-align:right;">
+47.215561
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q220
+</td>
+<td style="text-align:right;">
+116.73491
+</td>
+<td style="text-align:right;">
+43.488430
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:right;">
+241.02072
+</td>
+<td style="text-align:right;">
+104.810999
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q301
+</td>
+<td style="text-align:right;">
+114.99704
+</td>
+<td style="text-align:right;">
+82.642628
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q302
+</td>
+<td style="text-align:right;">
+165.70699
+</td>
+<td style="text-align:right;">
+78.788742
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q305
+</td>
+<td style="text-align:right;">
+90.05246
+</td>
+<td style="text-align:right;">
+57.773743
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q306
+</td>
+<td style="text-align:right;">
+95.67252
+</td>
+<td style="text-align:right;">
+77.285461
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q307
+</td>
+<td style="text-align:right;">
+86.50610
+</td>
+<td style="text-align:right;">
+60.430823
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q308a
+</td>
+<td style="text-align:right;">
+153.35999
+</td>
+<td style="text-align:right;">
+75.951804
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q311a
+</td>
+<td style="text-align:right;">
+59.87842
+</td>
+<td style="text-align:right;">
+39.901935
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q319a
+</td>
+<td style="text-align:right;">
+141.02891
+</td>
+<td style="text-align:right;">
+34.516390
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q320a
+</td>
+<td style="text-align:right;">
+66.97533
+</td>
+<td style="text-align:right;">
+26.594493
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q4
+</td>
+<td style="text-align:right;">
+170.31269
+</td>
+<td style="text-align:right;">
+83.582254
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q404a
+</td>
+<td style="text-align:right;">
+260.24193
+</td>
+<td style="text-align:right;">
+70.194890
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q405
+</td>
+<td style="text-align:right;">
+97.34242
+</td>
+<td style="text-align:right;">
+33.430648
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q408
+</td>
+<td style="text-align:right;">
+97.13591
+</td>
+<td style="text-align:right;">
+68.569353
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q414a
+</td>
+<td style="text-align:right;">
+174.69147
+</td>
+<td style="text-align:right;">
+41.987289
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q504
+</td>
+<td style="text-align:right;">
+156.42538
+</td>
+<td style="text-align:right;">
+66.916645
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q509
+</td>
+<td style="text-align:right;">
+799.85922
+</td>
+<td style="text-align:right;">
+345.477473
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q6
+</td>
+<td style="text-align:right;">
+440.62235
+</td>
+<td style="text-align:right;">
+147.100137
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q7
+</td>
+<td style="text-align:right;">
+97.13678
+</td>
+<td style="text-align:right;">
+49.152938
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q8
+</td>
+<td style="text-align:right;">
+226.75107
+</td>
+<td style="text-align:right;">
+109.749620
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q9
+</td>
+<td style="text-align:right;">
+308.42778
+</td>
+<td style="text-align:right;">
+97.904593
+</td>
+<td style="text-align:left;">
+NSSF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UT1
+</td>
+<td style="text-align:right;">
+141.46932
+</td>
+<td style="text-align:right;">
+78.946414
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UT2
+</td>
+<td style="text-align:right;">
+136.99899
+</td>
+<td style="text-align:right;">
+60.011894
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UT3
+</td>
+<td style="text-align:right;">
+312.21579
+</td>
+<td style="text-align:right;">
+211.535213
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UT4
+</td>
+<td style="text-align:right;">
+130.02602
+</td>
+<td style="text-align:right;">
+150.911333
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UT5
+</td>
+<td style="text-align:right;">
+243.30202
+</td>
+<td style="text-align:right;">
+186.669671
+</td>
+<td style="text-align:left;">
+NatureParks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W01
+</td>
+<td style="text-align:right;">
+156.09023
+</td>
+<td style="text-align:right;">
+83.742488
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W02
+</td>
+<td style="text-align:right;">
+146.70648
+</td>
+<td style="text-align:right;">
+35.007526
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W03
+</td>
+<td style="text-align:right;">
+124.30847
+</td>
+<td style="text-align:right;">
+69.073569
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W04
+</td>
+<td style="text-align:right;">
+329.63424
+</td>
+<td style="text-align:right;">
+187.848491
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W05
+</td>
+<td style="text-align:right;">
+123.93502
+</td>
+<td style="text-align:right;">
+44.911719
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W06
+</td>
+<td style="text-align:right;">
+822.24643
+</td>
+<td style="text-align:right;">
+433.164001
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W07
+</td>
+<td style="text-align:right;">
+291.84092
+</td>
+<td style="text-align:right;">
+290.831693
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W08
+</td>
+<td style="text-align:right;">
+126.88531
+</td>
+<td style="text-align:right;">
+137.929828
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W09
+</td>
+<td style="text-align:right;">
+194.82655
+</td>
+<td style="text-align:right;">
+65.179803
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W10
+</td>
+<td style="text-align:right;">
+276.71959
+</td>
+<td style="text-align:right;">
+93.269864
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W11
+</td>
+<td style="text-align:right;">
+94.12767
+</td>
+<td style="text-align:right;">
+271.316579
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W12
+</td>
+<td style="text-align:right;">
+209.60280
+</td>
+<td style="text-align:right;">
+123.901134
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W13
+</td>
+<td style="text-align:right;">
+437.75780
+</td>
+<td style="text-align:right;">
+169.043591
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W14
+</td>
+<td style="text-align:right;">
+12.96328
+</td>
+<td style="text-align:right;">
+31.627540
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W15
+</td>
+<td style="text-align:right;">
+386.80608
+</td>
+<td style="text-align:right;">
+215.467525
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W16
+</td>
+<td style="text-align:right;">
+122.85741
+</td>
+<td style="text-align:right;">
+144.957804
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W17
+</td>
+<td style="text-align:right;">
+161.73570
+</td>
+<td style="text-align:right;">
+181.580314
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W18
+</td>
+<td style="text-align:right;">
+162.09229
+</td>
+<td style="text-align:right;">
+43.118042
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W19
+</td>
+<td style="text-align:right;">
+288.13384
+</td>
+<td style="text-align:right;">
+235.342462
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W20
+</td>
+<td style="text-align:right;">
+126.82501
+</td>
+<td style="text-align:right;">
+74.260173
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W21
+</td>
+<td style="text-align:right;">
+153.78698
+</td>
+<td style="text-align:right;">
+172.987710
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W22
+</td>
+<td style="text-align:right;">
+151.00536
+</td>
+<td style="text-align:right;">
+215.817836
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W23
+</td>
+<td style="text-align:right;">
+159.47115
+</td>
+<td style="text-align:right;">
+54.131284
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W24
+</td>
+<td style="text-align:right;">
+186.40299
+</td>
+<td style="text-align:right;">
+137.839350
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W25
+</td>
+<td style="text-align:right;">
+197.58309
+</td>
+<td style="text-align:right;">
+49.003036
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W26
+</td>
+<td style="text-align:right;">
+187.60133
+</td>
+<td style="text-align:right;">
+92.598254
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W27
+</td>
+<td style="text-align:right;">
+255.36176
+</td>
+<td style="text-align:right;">
+119.550588
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W28
+</td>
+<td style="text-align:right;">
+190.90326
+</td>
+<td style="text-align:right;">
+105.874147
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W29
+</td>
+<td style="text-align:right;">
+308.64480
+</td>
+<td style="text-align:right;">
+383.546263
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W30
+</td>
+<td style="text-align:right;">
+197.58065
+</td>
+<td style="text-align:right;">
+133.736939
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W31
+</td>
+<td style="text-align:right;">
+198.55310
+</td>
+<td style="text-align:right;">
+108.400565
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W32
+</td>
+<td style="text-align:right;">
+118.43561
+</td>
+<td style="text-align:right;">
+76.694902
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W33
+</td>
+<td style="text-align:right;">
+246.44698
+</td>
+<td style="text-align:right;">
+123.873324
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W34
+</td>
+<td style="text-align:right;">
+122.52789
+</td>
+<td style="text-align:right;">
+121.282885
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W35
+</td>
+<td style="text-align:right;">
+67.72131
+</td>
+<td style="text-align:right;">
+45.775982
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W36
+</td>
+<td style="text-align:right;">
+168.41002
+</td>
+<td style="text-align:right;">
+122.547187
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W37
+</td>
+<td style="text-align:right;">
+79.66613
+</td>
+<td style="text-align:right;">
+29.398764
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W38
+</td>
+<td style="text-align:right;">
+147.97113
+</td>
+<td style="text-align:right;">
+125.596976
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W39
+</td>
+<td style="text-align:right;">
+109.77155
+</td>
+<td style="text-align:right;">
+44.694969
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W40
+</td>
+<td style="text-align:right;">
+159.81659
+</td>
+<td style="text-align:right;">
+47.042167
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W41
+</td>
+<td style="text-align:right;">
+181.17761
+</td>
+<td style="text-align:right;">
+65.077784
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W42
+</td>
+<td style="text-align:right;">
+210.78335
+</td>
+<td style="text-align:right;">
+89.448103
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W44
+</td>
+<td style="text-align:right;">
+204.10663
+</td>
+<td style="text-align:right;">
+131.737592
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W45
+</td>
+<td style="text-align:right;">
+162.86635
+</td>
+<td style="text-align:right;">
+23.617308
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W46
+</td>
+<td style="text-align:right;">
+122.73458
+</td>
+<td style="text-align:right;">
+33.908155
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W47
+</td>
+<td style="text-align:right;">
+81.81173
+</td>
+<td style="text-align:right;">
+57.555797
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W48
+</td>
+<td style="text-align:right;">
+262.31518
+</td>
+<td style="text-align:right;">
+93.820620
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W49
+</td>
+<td style="text-align:right;">
+569.15859
+</td>
+<td style="text-align:right;">
+176.131470
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W50
+</td>
+<td style="text-align:right;">
+113.27596
+</td>
+<td style="text-align:right;">
+63.909157
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W51
+</td>
+<td style="text-align:right;">
+315.96524
+</td>
+<td style="text-align:right;">
+124.172082
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W52
+</td>
+<td style="text-align:right;">
+141.90954
+</td>
+<td style="text-align:right;">
+83.699864
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W53
+</td>
+<td style="text-align:right;">
+230.64573
+</td>
+<td style="text-align:right;">
+141.159493
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W54
+</td>
+<td style="text-align:right;">
+242.93373
+</td>
+<td style="text-align:right;">
+79.534635
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W55
+</td>
+<td style="text-align:right;">
+181.23666
+</td>
+<td style="text-align:right;">
+190.309757
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W56
+</td>
+<td style="text-align:right;">
+128.16780
+</td>
+<td style="text-align:right;">
+32.886871
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W57
+</td>
+<td style="text-align:right;">
+112.75134
+</td>
+<td style="text-align:right;">
+54.548686
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W58
+</td>
+<td style="text-align:right;">
+330.59702
+</td>
+<td style="text-align:right;">
+177.027683
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W59
+</td>
+<td style="text-align:right;">
+76.25737
+</td>
+<td style="text-align:right;">
+58.099651
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W60
+</td>
+<td style="text-align:right;">
+301.72293
+</td>
+<td style="text-align:right;">
+155.161842
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W62
+</td>
+<td style="text-align:right;">
+287.18051
+</td>
+<td style="text-align:right;">
+84.170950
+</td>
+<td style="text-align:left;">
+WYK
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note: there were no big trees in AQ5.</p>
+<pre class="r"><code>ggplot(data = plots_AGBsum) +
+    geom_point(mapping = aes(y = trees, x = bigTrees, col = plotSet)) +
+    scale_y_continuous(trans = &quot;log10&quot;) +
+    scale_x_continuous(trans = &quot;log10&quot;) +
+    geom_abline(intercept = 0, slope = 1)</code></pre>
+<p><img src="veg_biomass_files/figure-html/plot%20tree%20vs%20bigtree-1.png" width="672" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
