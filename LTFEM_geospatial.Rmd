@@ -1,0 +1,170 @@
+---
+title: "Geospatial dashboard for LTFEM plots and trees"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+    toc_depth: 3
+    code_folding: hide
+    df_print: kable
+---
+
+Will need you to do the following:
+
+1. The Mandai plot centres are not in `\data\shapefiles\`. Can you try looking for it in our Teams and add to this folder in the GitHub repository? If there are no shapefiles for the Mandai plot set in Teams, there should at least be the .KML file; convert the .KML to shapefile and move it over.
+
+2. From the plot centres shapefiles, write a script to reproject to the plot corners as a perfect square. You will probably first need to ensure that the CRS is in UTM format, because UTM coordinates are in metres. Note that these should all be *spatial polygon features*. Save the script in the `\scripts\` folder.
+    a. Reproject a set for the core plot area, i.e., 20 x 20 m. Note that only eight of the Mandai plots have this 20 x 20 m area.
+    b. For those with sapling sub-plots, reproject a set for the sub-plot 10 x 10 m.
+        i. The Mandai plots originally consisted only of this 10 x 10 m area, and so the plot centre from the Mandai geospatial file is actually the centre of this 10 x 10 m plot. 
+        ii. For the other 20 x 20 m plots with sub-plots nested within, you will need to figure out which quadrant the sub-plots are in before generating them. 
+        iii. For the eight Mandai 20 x 20 m plots, I think we recorded the plot corners and centre of the 20 x 20 m area afresh in 2023; can check if it is in the Teams or otherwise might be in one of the GPS receivers and not yet transferred over. May need to run Rie's `\scripts\plotCornerAveraging.R` on this set of waypoints to generate the plot centre, and then cross-check whether the 10 x 10 m area is within the correct quadrant of this 20 x 20 m area. There will bound to be some error from the GPS receiver; we can resolve it later (most likely take the 20 x 20 m area as correct, and re-project the 10 x 10 m sub-plot from the correct quadrant).
+    c. There are also the plots with extended 40 x 40 m plot areas. Do the same.
+
+3. Write one or more other script(s) that puts all the `trees`, `bigTrees`, and `saplings` from all the plot sets to generate these trees as *spatial points features*, based on `coord_x` and `coord_y` and the plot centres as the origin. Might be helpful (or not) to consult the script that I wrote in `\scripts\makePlotMaps.R`. The spatial features should contain the `@data` table that enables you to show the trees of different DBH as different sizes (and also species for different colors and filtering, but this part maybe later).
+
+4. Can then use the `tmap` library's functions to put the core plot, sub-plot, extended plot area polygons, together with the trees, big trees, saplings, into a leaflet widget.
+
+Leaflet Widget
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Load libraries ----
+library(sf)
+library(dplyr)
+library(tmap)
+library(leaflet)
+
+#Load data ----
+trees     <- st_read("../LTFEM_Veg/out/shapefiles/mandai/trees_points.shp")
+bigTrees  <- st_read("../LTFEM_Veg/out/shapefiles/mandai/bigTrees_points.shp")
+saplings  <- st_read("../LTFEM_Veg/out/shapefiles/mandai/saplings_points.shp")
+mandai_10by10 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_10by10_shapefile.shp")
+mandai_20by20 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_20by20_shapefile.shp")
+mandai_40by40 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_40by40_shapefile.shp")
+
+#Convert to WGS84 for leaflet
+trees_wgs     <- st_transform(trees, 4326)
+bigTrees_wgs  <- st_transform(bigTrees, 4326)
+saplings_wgs  <- st_transform(saplings, 4326)
+mandai_10by10_wgs <- st_transform(mandai_10by10, 4326)
+mandai_20by20_wgs <- st_transform(mandai_20by20, 4326)
+mandai_40by40_wgs <- st_transform(mandai_40by40, 4326)
+
+#Scaling DBH ----
+trees_wgs <- trees_wgs %>% mutate(radius = DBH / 200) #adjust denominator for scale
+bigTrees_wgs <- bigTrees_wgs %>% mutate(radius = DBH / 200)
+saplings_wgs <- saplings_wgs %>% mutate(radius = DBH / 200)
+
+#Legend making function ----
+addLegendCustom <- function(map, colors, sizes, labels, opacity = 0.7) {
+    map <- addLegend(map,
+              position = "bottomright",
+              colors = colors,
+              labels = labels,
+              title = "Legend",
+              opacity = opacity
+    )
+    return(map)
+}
+
+#making leaflet----
+leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
+    addProviderTiles(providers$OpenStreetMap.Mapnik, options = providerTileOptions(maxZoom = 30)) %>%
+    
+    # --- Squares ---
+    addPolygons(
+        data = mandai_40by40_wgs,
+        color = "orange",
+        weight = 2,
+        fill = FALSE,
+        group = "40x40 Plots",
+        popup = ~paste0("<b>Plot ID:</b> ", alias)
+    ) %>%
+    
+    addPolygons(
+        data = mandai_20by20_wgs,
+        color = "green",
+        weight = 2,
+        fill = FALSE,
+        group = "20x20 Plots",
+        popup = ~paste0("<b>Plot ID:</b> ", alias)
+    ) %>%
+    
+    addPolygons(
+        data = mandai_10by10_wgs,
+        color = "blue",
+        weight = 2,
+        fill = FALSE,
+        group = "10x10 Plots",
+        popup = ~paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    # --- Trees layer ---
+    addCircles(
+    # addCircleMarkers(
+        data = trees_wgs,
+        color = "darkgreen",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~radius,
+        group = "Trees",
+        popup = ~paste0(
+            "<b>treeID:</b> ", treeID,
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    # --- Big Trees layer ---
+    addCircles(
+    # addCircleMarkers(
+        data = bigTrees_wgs,
+        color = "orange",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~radius,
+        group = "Big Trees",
+        popup = ~paste0(
+            "<b>bigTreeID:</b> ", bigTrID,
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    # --- Saplings layer ---
+    addCircles(
+    # addCircleMarkers(
+        data = saplings_wgs,
+        color = "blue",
+        fillOpacity = 0.6,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~radius,
+        group = "Saplings",
+        popup = ~paste0(
+            "<b>saplingID:</b> ", treeID,
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    # --- 3. Layer control toggle ---
+    addLayersControl(
+        overlayGroups = c("Trees", "Big Trees", "Saplings", "10x10 Plots", "20x20 Plots", "40x40 Plots"),
+        options = layersControlOptions(collapsed = FALSE)
+    ) %>%
+    
+    # --- 4. Add a legend for DBH ---
+    addLegendCustom(
+        colors = c("blue", "darkgreen", "orange"),
+        sizes = c(5, 20, 40),
+        labels = c( "Saplings", "Trees", "Big Trees")
+    )
+```
+
+
+Add a new chunk by pressing *Ctrl+Alt+I*.
+
+Eventually you can *knit* the Notebook contents into a HTML file that will show the interactive map(s).
