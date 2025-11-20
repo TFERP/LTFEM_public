@@ -13,45 +13,34 @@ output:
 ```{r load libraries and files, include=FALSE}
 #Load libraries ----
 library(sf)
-library(dplyr)
-library(tmap)
+library(tidyverse)
 library(leaflet)
 
 #Load data ----
-trees     <- st_read("../LTFEM_Veg/out/shapefiles/mandai/trees_points.shp")
-bigTrees  <- st_read("../LTFEM_Veg/out/shapefiles/mandai/bigTrees_points.shp")
-saplings  <- st_read("../LTFEM_Veg/out/shapefiles/mandai/saplings_points.shp")
-mandai_10by10 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_10by10_shapefile.shp")
-mandai_20by20 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_20by20_shapefile.shp")
-mandai_40by40 <- st_read("../LTFEM_Veg/out/shapefiles/mandai/mandai_40by40_shapefile.shp")
+Mandai_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_saplings.geojson") %>% st_transform(4326)
+Mandai_trees <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_trees.geojson") %>% st_transform(4326)
+Mandai_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_bigTrees.geojson") %>% st_transform(4326)
+Mandai_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_10x10.geojson") %>% st_transform(4326)
+Mandai_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_20x20.geojson") %>% st_transform(4326)
+Mandai_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_40x40.geojson") %>% st_transform(4326)
+
+WYK_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_saplings.geojson") %>% st_transform(4326)
+WYK_trees <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_trees.geojson") %>% st_transform(4326)
+WYK_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_bigTrees.geojson") %>% st_transform(4326)
+WYK_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_10x10.geojson") %>% st_transform(4326)
+WYK_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_20x20.geojson") %>% st_transform(4326)
+WYK_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_40x40.geojson") %>% st_transform(4326)
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#Convert to WGS84 for leaflet
-trees_wgs     <- st_transform(trees, 4326)
-bigTrees_wgs  <- st_transform(bigTrees, 4326)
-saplings_wgs  <- st_transform(saplings, 4326)
-mandai_10by10_wgs <- st_transform(mandai_10by10, 4326)
-mandai_20by20_wgs <- st_transform(mandai_20by20, 4326)
-mandai_40by40_wgs <- st_transform(mandai_40by40, 4326)
-
 #Scaling DBH ----
-trees_wgs <- trees_wgs %>% mutate(radius = DBH / 200) #adjust denominator for scale
-bigTrees_wgs <- bigTrees_wgs %>% mutate(radius = DBH / 200)
-saplings_wgs <- saplings_wgs %>% mutate(radius = DBH / 200)
-
-#Legend making function ----
-addLegendCustom <- function(map, colors, sizes, labels, opacity = 0.7) {
-    map <- addLegend(map,
-              position = "bottomright",
-              colors = colors,
-              labels = labels,
-              title = "Legend",
-              opacity = opacity
-    )
-    return(map)
-}
+Mandai_saplings <- Mandai_saplings %>% mutate(radius = DBH / 200) #adjust denominator for scale
+Mandai_trees <- Mandai_trees %>% mutate(radius = DBH / 200)
+Mandai_bigTrees <- Mandai_bigTrees %>% mutate(radius = DBH / 200)
+WYK_saplings <- WYK_saplings %>% mutate(radius = DBH / 200)
+WYK_trees <- WYK_trees %>% mutate(radius = DBH / 200)
+WYK_bigTrees <- WYK_bigTrees %>% mutate(radius = DBH / 200)
 
 #making leaflet----
 leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
@@ -59,44 +48,83 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Squares ---
     addPolygons(
-        data = mandai_40by40_wgs,
-        color = "orange",
+        data = Mandai_plots_40x40,
+        color = "red",
         weight = 2,
         fill = FALSE,
-        group = "40x40 Plots",
-        popup = ~paste0("<b>Plot ID:</b> ", alias)
+        group = "Mandai 40x40 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
     ) %>%
     
     addPolygons(
-        data = mandai_20by20_wgs,
-        color = "green",
+        data = Mandai_plots_20x20,
+        color = "red",
         weight = 2,
         fill = FALSE,
-        group = "20x20 Plots",
-        popup = ~paste0("<b>Plot ID:</b> ", alias)
+        group = "Mandai 20x20 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
     ) %>%
     
     addPolygons(
-        data = mandai_10by10_wgs,
-        color = "blue",
+        data = Mandai_plots_10x10,
+        color = "red",
         weight = 2,
         fill = FALSE,
-        group = "10x10 Plots",
-        popup = ~paste0("<b>Plot ID:</b> ", plotID)
+        group = "Mandai 10x10 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    addPolygons(
+        data = WYK_plots_40x40,
+        color = "black",
+        weight = 2,
+        fill = FALSE,
+        group = "WYK 40x40 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    addPolygons(
+        data = WYK_plots_20x20,
+        color = "black",
+        weight = 2,
+        fill = FALSE,
+        group = "WYK 20x20 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    addPolygons(
+        data = WYK_plots_10x10,
+        color = "black",
+        weight = 2,
+        fill = FALSE,
+        group = "WYK 10x10 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
     ) %>%
     
     # --- Trees layer ---
     addCircles(
-    # addCircleMarkers(
-        data = trees_wgs,
+        data = Mandai_trees,
         color = "darkgreen",
         fillOpacity = 0.7,
         stroke = TRUE,
         weight = 1,
-        radius = ~radius,
-        group = "Trees",
-        popup = ~paste0(
-            "<b>treeID:</b> ", treeID,
+        radius = ~ radius,
+        group = "Mandai Trees",
+        popup = ~ paste0(
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    addCircles(
+        data = WYK_trees,
+        color = "darkgreen",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "WYK Trees",
+        popup = ~ paste0(
             "<br><b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
@@ -104,16 +132,28 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Big Trees layer ---
     addCircles(
-    # addCircleMarkers(
-        data = bigTrees_wgs,
+        data = Mandai_bigTrees,
         color = "orange",
         fillOpacity = 0.7,
         stroke = TRUE,
         weight = 1,
-        radius = ~radius,
-        group = "Big Trees",
-        popup = ~paste0(
-            "<b>bigTreeID:</b> ", bigTrID,
+        radius = ~ radius,
+        group = "Mandai Big Trees",
+        popup = ~ paste0(
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    addCircles(
+        data = WYK_bigTrees,
+        color = "orange",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "WYK Big Trees",
+        popup = ~ paste0(
             "<br><b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
@@ -121,16 +161,28 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Saplings layer ---
     addCircles(
-    # addCircleMarkers(
-        data = saplings_wgs,
+        data = Mandai_saplings,
         color = "blue",
         fillOpacity = 0.6,
         stroke = TRUE,
         weight = 1,
-        radius = ~radius,
-        group = "Saplings",
-        popup = ~paste0(
-            "<b>saplingID:</b> ", treeID,
+        radius = ~ radius,
+        group = "Mandai Saplings",
+        popup = ~ paste0(
+            "<br><b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    addCircles(
+        data = WYK_saplings,
+        color = "blue",
+        fillOpacity = 0.6,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "WYK Saplings",
+        popup = ~ paste0(
             "<br><b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
@@ -138,14 +190,18 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- 3. Layer control toggle ---
     addLayersControl(
-        overlayGroups = c("Trees", "Big Trees", "Saplings", "10x10 Plots", "20x20 Plots", "40x40 Plots"),
+        overlayGroups = c("Mandai Saplings", "Mandai Trees", "Mandai Big Trees",
+                          "Mandai 10x10 Plots", "Mandai 20x20 Plots", "Mandai 40x40 Plots",
+                          "WYK Saplings", "WYK Trees", "WYK Big Trees",
+                          "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots"),
         options = layersControlOptions(collapsed = FALSE)
     ) %>%
     
     # --- 4. Add a legend for DBH ---
-    addLegendCustom(
+    addLegend(
         colors = c("blue", "darkgreen", "orange"),
-        sizes = c(5, 20, 40),
-        labels = c( "Saplings", "Trees", "Big Trees")
+        labels = c( "Saplings", "Trees", "Big Trees"),
+        position = "bottomright",
+        title = "Legend"
     )
 ```
