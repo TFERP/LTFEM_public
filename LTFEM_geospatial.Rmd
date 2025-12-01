@@ -111,7 +111,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "Mandai Trees",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
@@ -125,7 +125,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "WYK Trees",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
@@ -140,7 +140,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "Mandai Big Trees",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
@@ -154,7 +154,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "WYK Big Trees",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
@@ -169,7 +169,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "Mandai Saplings",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
@@ -183,7 +183,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         radius = ~ radius,
         group = "WYK Saplings",
         popup = ~ paste0(
-            "<br><b>Species:</b> ", species,
+            "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
         )
     ) %>%
