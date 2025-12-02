@@ -30,6 +30,20 @@ WYK_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_bigTrees.geojs
 WYK_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_10x10.geojson") %>% st_transform(4326)
 WYK_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_20x20.geojson") %>% st_transform(4326)
 WYK_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_40x40.geojson") %>% st_transform(4326)
+
+NSSF_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_saplings.geojson") %>% st_transform(4326)
+NSSF_trees <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_trees.geojson") %>% st_transform(4326)
+NSSF_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_bigTrees.geojson") %>% st_transform(4326)
+NSSF_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_10x10.geojson") %>% st_transform(4326)
+NSSF_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_20x20.geojson") %>% st_transform(4326)
+NSSF_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_40x40.geojson") %>% st_transform(4326)
+
+#Natureparks_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_saplings.geojson") %>% st_transform(4326)
+Natureparks_trees <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_trees.geojson") %>% st_transform(4326)
+Natureparks_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_bigTrees.geojson") %>% st_transform(4326)
+#Natureparks_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_10x10.geojson") %>% st_transform(4326)
+Natureparks_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_20x20.geojson") %>% st_transform(4326)
+Natureparks_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_40x40.geojson") %>% st_transform(4326)
 ```
 
 
@@ -38,9 +52,18 @@ WYK_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_40x40
 Mandai_saplings <- Mandai_saplings %>% mutate(radius = DBH / 200) #adjust denominator for scale
 Mandai_trees <- Mandai_trees %>% mutate(radius = DBH / 200)
 Mandai_bigTrees <- Mandai_bigTrees %>% mutate(radius = DBH / 200)
+
 WYK_saplings <- WYK_saplings %>% mutate(radius = DBH / 200)
 WYK_trees <- WYK_trees %>% mutate(radius = DBH / 200)
 WYK_bigTrees <- WYK_bigTrees %>% mutate(radius = DBH / 200)
+
+NSSF_saplings <- NSSF_saplings %>% mutate(radius = DBH / 200)
+NSSF_trees <- NSSF_trees %>% mutate(radius = DBH / 200)
+NSSF_bigTrees <- NSSF_bigTrees %>% mutate(radius = DBH / 200)
+
+#Natureparks_saplings <- Natureparks_saplings %>% mutate(radius = DBH / 200)
+Natureparks_trees <- Natureparks_trees %>% mutate(radius = DBH / 200)
+Natureparks_bigTrees <- Natureparks_bigTrees %>% mutate(radius = DBH / 200)
 
 #making leaflet----
 leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
@@ -101,6 +124,63 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         popup = ~ paste0("<b>Plot ID:</b> ", plotID)
     ) %>%
     
+    addPolygons(
+        data = NSSF_plots_40x40,
+        color = "blue",
+        weight = 2,
+        fill = FALSE,
+        group = "NSSF 40x40 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID,
+                         "<br><b>Plot type:</b> ", plotType_wetdry)
+    ) %>%
+    
+    addPolygons(
+        data = NSSF_plots_20x20,
+        color = "blue",
+        weight = 2,
+        fill = FALSE,
+        group = "NSSF 20x20 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID,
+                         "<br><b>Plot type:</b> ", plotType_wetdry)
+    ) %>%
+    
+    addPolygons(
+        data = NSSF_plots_10x10,
+        color = "blue",
+        weight = 2,
+        fill = FALSE,
+        group = "NSSF 10x10 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID,
+                         "<br><b>Plot type:</b> ", plotType_wetdry)
+    ) %>%    
+    
+    addPolygons(
+        data = Natureparks_plots_40x40,
+        color = "purple",
+        weight = 2,
+        fill = FALSE,
+        group = "Natureparks 40x40 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    addPolygons(
+        data = Natureparks_plots_20x20,
+        color = "purple",
+        weight = 2,
+        fill = FALSE,
+        group = "Natureparks 20x20 Plots",
+        popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    ) %>%
+    
+    # addPolygons(
+    #     data = Natureparks_plots_10x10,
+    #     color = "purple",
+    #     weight = 2,
+    #     fill = FALSE,
+    #     group = "Natureparks 10x10 Plots",
+    #     popup = ~ paste0("<b>Plot ID:</b> ", plotID)
+    # ) %>%        
+    
     # --- Trees layer ---
     addCircles(
         data = Mandai_trees,
@@ -124,6 +204,34 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         weight = 1,
         radius = ~ radius,
         group = "WYK Trees",
+        popup = ~ paste0(
+            "<b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    addCircles(
+        data = NSSF_trees,
+        color = "darkgreen",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "NSSF Trees",
+        popup = ~ paste0(
+            "<b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%
+    
+    addCircles(
+        data = Natureparks_trees,
+        color = "darkgreen",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "Natureparks Trees",
         popup = ~ paste0(
             "<b>Species:</b> ", species,
             "<br><b>DBH:</b> ", round(DBH, 1), " cm"
@@ -159,6 +267,34 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         )
     ) %>%
     
+    addCircles(
+        data = NSSF_bigTrees,
+        color = "orange",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "NSSF Big Trees",
+        popup = ~ paste0(
+            "<b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%    
+    
+    addCircles(
+        data = Natureparks_bigTrees,
+        color = "orange",
+        fillOpacity = 0.7,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "Natureparks Big Trees",
+        popup = ~ paste0(
+            "<b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%        
+    
     # --- Saplings layer ---
     addCircles(
         data = Mandai_saplings,
@@ -188,13 +324,47 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
         )
     ) %>%
     
+    addCircles(
+        data = NSSF_saplings,
+        color = "blue",
+        fillOpacity = 0.6,
+        stroke = TRUE,
+        weight = 1,
+        radius = ~ radius,
+        group = "NSSF Saplings",
+        popup = ~ paste0(
+            "<b>Species:</b> ", species,
+            "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+        )
+    ) %>%    
+    
+    # addCircles(
+    #     data = Natureparks_saplings,
+    #     color = "blue",
+    #     fillOpacity = 0.6,
+    #     stroke = TRUE,
+    #     weight = 1,
+    #     radius = ~ radius,
+    #     group = "Natureparks Saplings",
+    #     popup = ~ paste0(
+    #         "<b>Species:</b> ", species,
+    #         "<br><b>DBH:</b> ", round(DBH, 1), " cm"
+    #     )
+    # ) %>%
+    
     # --- 3. Layer control toggle ---
     addLayersControl(
         overlayGroups = c("Mandai Saplings", "Mandai Trees", "Mandai Big Trees",
                           "Mandai 10x10 Plots", "Mandai 20x20 Plots", "Mandai 40x40 Plots",
                           "WYK Saplings", "WYK Trees", "WYK Big Trees",
-                          "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots"),
-        options = layersControlOptions(collapsed = FALSE)
+                          "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots",
+                          "NSSF Saplings", "NSSF Trees", "NSSF Big Trees",
+                          "NSSF 10x10 Plots", "NSSF 20x20 Plots", "NSSF 40x40 Plots",
+                          #"Natureparks Saplings", 
+                          "Natureparks Trees", "Natureparks Big Trees",
+                          #"Natureparks 10x10 Plots", 
+                          "Natureparks 20x20 Plots", "Natureparks 40x40 Plots"),
+        options = layersControlOptions(collapsed = TRUE)
     ) %>%
     
     # --- 4. Add a legend for DBH ---
