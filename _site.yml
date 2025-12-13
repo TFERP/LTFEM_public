@@ -1,1 +1,24 @@
 output_dir: docs
+
+navbar:
+    title: "Tropical Forest Ecology Research programme"
+    left:
+        - text: "Overview"
+          href: index.html
+        - text: "Snapshots"
+          menu:
+            - text: "Plots"
+              href: LTFEM_geospatial.html
+            - text: "Phenology"
+              href: past_students.html
+            - text: "Sensors"
+              href: internships.html
+        - text: "Publications"
+          href: publications.html
+
+output:
+  html_document:
+    theme: default
+    highlight: default
+    include:
+    css: styles.css
