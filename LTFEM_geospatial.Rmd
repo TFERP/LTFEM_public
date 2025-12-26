@@ -17,61 +17,56 @@ library(tidyverse)
 library(leaflet)
 
 #Load data ----
-Mandai_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_saplings.geojson") %>% st_transform(4326)
-Mandai_trees <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_trees.geojson") %>% st_transform(4326)
-Mandai_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_bigTrees.geojson") %>% st_transform(4326)
-Mandai_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_10x10.geojson") %>% st_transform(4326)
-Mandai_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_20x20.geojson") %>% st_transform(4326)
-Mandai_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/Mandai_plots_40x40.geojson") %>% st_transform(4326)
 
-WYK_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_saplings.geojson") %>% st_transform(4326)
-WYK_trees <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_trees.geojson") %>% st_transform(4326)
-WYK_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_bigTrees.geojson") %>% st_transform(4326)
-WYK_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_10x10.geojson") %>% st_transform(4326)
-WYK_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_20x20.geojson") %>% st_transform(4326)
-WYK_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/WYK_plots_40x40.geojson") %>% st_transform(4326)
+trees_layerNames <- c("Mandai_saplings_2025",
+  "Mandai_trees_2023",
+  "Mandai_bigTrees_2023",
+  "WYK_saplings_2024",
+  "WYK_trees_2022",
+  "WYK_bigTrees_2022",
+  "NSSF_saplings_2024",        
+  "NSSF_trees_2024",
+  "NSSF_bigTrees_2024",
+  "NatureParks_trees_2023",
+  "NatureParks_bigTrees_2023"
+  )
+trees <-  trees_layerNames %>%
+    lapply(function(x) {
+        st_read(paste0("../LTFEM_Veg/data/classified/geospatial/", x, ".geojson")) %>%
+            st_transform(4326) %>%
+            mutate(radius = DBH / 200) #adjust denominator for scale
+    }) %>%
+    set_names(trees_layerNames)
 
-NSSF_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_saplings.geojson") %>% st_transform(4326)
-NSSF_trees <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_trees.geojson") %>% st_transform(4326)
-NSSF_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_bigTrees.geojson") %>% st_transform(4326)
-NSSF_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_10x10.geojson") %>% st_transform(4326)
-NSSF_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_20x20.geojson") %>% st_transform(4326)
-NSSF_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/NSSF_plots_40x40.geojson") %>% st_transform(4326)
+boundaries_layerNames <-c("Mandai_subplot_boundaries_reprojected",
+  "Mandai_corePlot_boundaries_reprojected",
+  "Mandai_extendedPlot_boundaries_reprojected",
+  "WYK_subplot_boundaries_reprojected",
+  "WYK_corePlot_boundaries_reprojected",
+  "WYK_extendedPlot_boundaries_reprojected",
+  "NSSF_subplot_boundaries_reprojected",
+  "NSSF_corePlot_boundaries_reprojected",
+  "NSSF_extendedPlot_boundaries_reprojected",
+  "NatureParks_corePlot_boundaries_reprojected",
+  "NatureParks_extendedPlot_boundaries_reprojected")
+boundaries <- boundaries_layerNames %>%
+    lapply(function(x) {
+        st_read(paste0("../LTFEM_Veg/out/geospatial/", x, ".geojson")) %>% 
+                    st_transform(4326)
+    }) %>%
+    set_names(boundaries_layerNames)
 
-#Natureparks_saplings <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_saplings.geojson") %>% st_transform(4326)
-Natureparks_trees <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_trees.geojson") %>% st_transform(4326)
-Natureparks_bigTrees <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_bigTrees.geojson") %>% st_transform(4326)
-#Natureparks_plots_10x10 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_10x10.geojson") %>% st_transform(4326)
-Natureparks_plots_20x20 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_20x20.geojson") %>% st_transform(4326)
-Natureparks_plots_40x40 <- st_read("../LTFEM_Veg/data/classified/geojson/Natureparks_plots_40x40.geojson") %>% st_transform(4326)
+rm(trees_layerNames, boundaries_layerNames)
 ```
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#Scaling DBH ----
-Mandai_saplings <- Mandai_saplings %>% mutate(radius = DBH / 200) #adjust denominator for scale
-Mandai_trees <- Mandai_trees %>% mutate(radius = DBH / 200)
-Mandai_bigTrees <- Mandai_bigTrees %>% mutate(radius = DBH / 200)
-
-WYK_saplings <- WYK_saplings %>% mutate(radius = DBH / 200)
-WYK_trees <- WYK_trees %>% mutate(radius = DBH / 200)
-WYK_bigTrees <- WYK_bigTrees %>% mutate(radius = DBH / 200)
-
-NSSF_saplings <- NSSF_saplings %>% mutate(radius = DBH / 200)
-NSSF_trees <- NSSF_trees %>% mutate(radius = DBH / 200)
-NSSF_bigTrees <- NSSF_bigTrees %>% mutate(radius = DBH / 200)
-
-#Natureparks_saplings <- Natureparks_saplings %>% mutate(radius = DBH / 200)
-Natureparks_trees <- Natureparks_trees %>% mutate(radius = DBH / 200)
-Natureparks_bigTrees <- Natureparks_bigTrees %>% mutate(radius = DBH / 200)
-
-#making leaflet----
+```{r making leaflet, echo=FALSE, message=FALSE, warning=FALSE}
 leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     addProviderTiles(providers$OpenStreetMap.Mapnik, options = providerTileOptions(maxZoom = 30)) %>%
     
-    # --- Squares ---
+    # --- boundaries ---
     addPolygons(
-        data = Mandai_plots_40x40,
+        data = boundaries$Mandai_extendedPlot_boundaries_reprojected,
         color = "red",
         weight = 2,
         fill = FALSE,
@@ -80,7 +75,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = Mandai_plots_20x20,
+        data = boundaries$Mandai_corePlot_boundaries_reprojected,
         color = "red",
         weight = 2,
         fill = FALSE,
@@ -89,7 +84,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = Mandai_plots_10x10,
+        data = boundaries$Mandai_subplot_boundaries_reprojected,
         color = "red",
         weight = 2,
         fill = FALSE,
@@ -98,7 +93,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = WYK_plots_40x40,
+        data = boundaries$WYK_extendedPlot_boundaries_reprojected,
         color = "black",
         weight = 2,
         fill = FALSE,
@@ -107,7 +102,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = WYK_plots_20x20,
+        data = boundaries$WYK_corePlot_boundaries_reprojected,
         color = "black",
         weight = 2,
         fill = FALSE,
@@ -116,7 +111,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = WYK_plots_10x10,
+        data = boundaries$WYK_subplot_boundaries_reprojected,
         color = "black",
         weight = 2,
         fill = FALSE,
@@ -125,7 +120,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = NSSF_plots_40x40,
+        data = boundaries$NSSF_extendedPlot_boundaries_reprojected,
         color = "blue",
         weight = 2,
         fill = FALSE,
@@ -135,7 +130,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = NSSF_plots_20x20,
+        data = boundaries$NSSF_corePlot_boundaries_reprojected,
         color = "blue",
         weight = 2,
         fill = FALSE,
@@ -145,7 +140,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = NSSF_plots_10x10,
+        data = boundaries$NSSF_subplot_boundaries_reprojected,
         color = "blue",
         weight = 2,
         fill = FALSE,
@@ -155,7 +150,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%    
     
     addPolygons(
-        data = Natureparks_plots_40x40,
+        data = boundaries$NatureParks_extendedPlot_boundaries_reprojected,
         color = "purple",
         weight = 2,
         fill = FALSE,
@@ -164,7 +159,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addPolygons(
-        data = Natureparks_plots_20x20,
+        data = boundaries$NatureParks_corePlot_boundaries_reprojected,
         color = "purple",
         weight = 2,
         fill = FALSE,
@@ -173,7 +168,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     # addPolygons(
-    #     data = Natureparks_plots_10x10,
+    #     data = boundaries$NatureParks_subplot_boundaries_reprojected,
     #     color = "purple",
     #     weight = 2,
     #     fill = FALSE,
@@ -183,7 +178,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Trees layer ---
     addCircles(
-        data = Mandai_trees,
+        data = trees$Mandai_trees_2023,
         color = "darkgreen",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -197,7 +192,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = WYK_trees,
+        data = trees$WYK_trees_2022,
         color = "darkgreen",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -211,7 +206,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = NSSF_trees,
+        data = trees$NSSF_trees_2024,
         color = "darkgreen",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -225,7 +220,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = Natureparks_trees,
+        data = trees$NatureParks_trees_2023,
         color = "darkgreen",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -240,7 +235,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Big Trees layer ---
     addCircles(
-        data = Mandai_bigTrees,
+        data = trees$Mandai_bigTrees_2023,
         color = "orange",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -254,7 +249,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = WYK_bigTrees,
+        data = trees$WYK_bigTrees_2022,
         color = "orange",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -268,7 +263,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = NSSF_bigTrees,
+        data = trees$NSSF_bigTrees_2024,
         color = "orange",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -282,7 +277,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%    
     
     addCircles(
-        data = Natureparks_bigTrees,
+        data = trees$NatureParks_bigTrees_2023,
         color = "orange",
         fillOpacity = 0.7,
         stroke = TRUE,
@@ -297,7 +292,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- Saplings layer ---
     addCircles(
-        data = Mandai_saplings,
+        data = trees$Mandai_saplings_2025,
         color = "blue",
         fillOpacity = 0.6,
         stroke = TRUE,
@@ -311,7 +306,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = WYK_saplings,
+        data = trees$WYK_saplings_2024,
         color = "blue",
         fillOpacity = 0.6,
         stroke = TRUE,
@@ -325,7 +320,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%
     
     addCircles(
-        data = NSSF_saplings,
+        data = trees$NSSF_saplings_2024,
         color = "blue",
         fillOpacity = 0.6,
         stroke = TRUE,
@@ -339,7 +334,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     ) %>%    
     
     # addCircles(
-    #     data = Natureparks_saplings,
+    #     data = trees$NatureParks_saplings_2023,
     #     color = "blue",
     #     fillOpacity = 0.6,
     #     stroke = TRUE,
