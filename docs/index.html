@@ -244,7 +244,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Overview</a>
+  <a href="index.html">LTFEM</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -257,10 +257,10 @@ $(document).ready(function () {
       <a href="LTFEM_geospatial.html">Plots</a>
     </li>
     <li>
-      <a href="past_students.html">Phenology</a>
+      <a href="LTFEM_phenology.html">Phenology</a>
     </li>
     <li>
-      <a href="internships.html">Sensors</a>
+      <a href="LTFEM_sensors.html">Sensors</a>
     </li>
   </ul>
 </li>
@@ -285,14 +285,87 @@ $(document).ready(function () {
 
 
 <!---Don't edit the README.md file, edit the index.Rmd file instead!--->
-<div id="ltfem-public-page" class="section level1">
-<h1>LTFEM Public page</h1>
-<p>Geospatial dashboard: <a
-href="https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html"
-class="uri">https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html</a></p>
-<p>Biomass: <a
-href="https://tferp.github.io/LTFEM_public/veg_biomass.html"
-class="uri">https://tferp.github.io/LTFEM_public/veg_biomass.html</a></p>
+<div id="long-term-forest-ecological-monitoring-ltfem-project"
+class="section level1">
+<h1>Long-Term Forest Ecological Monitoring (LTFEM) project</h1>
+<p>See <a
+href="https://www.nparks.gov.sg/sbg/research/publications/gardens&#39;-bulletin-singapore/-/media/sbg/gardens-bulletin/gbs_75_01_y2023/75_01_01_y2023_v7501_gbs_pg1.ashx">Er
+et al. (2023)</a> and references cited within for an overview of the
+plot set histories and plot design. Briefly, there are four sets of
+plots: * 40 ‘Mandai storm forest’ (Mandai) plots; see <a
+href="https://www.science.nus.edu.sg/wp-content/uploads/sites/11/2024/03/NIS_S1_207-218.pdf">Lai
+et al. (2022)</a>. * 20 ‘Nature Parks’ (NatureParks) plots; see <a
+href="https://onlinelibrary.wiley.com/doi/abs/10.1111/avsc.12322">Neo et
+al. (2017)</a> but note that only 20 of the 100 plots (in Bukit Batok
+Nature Park, Bukit Batok Town Park, Thomson Nature Park, and Windsor
+Nature Park) are maintained under the LTFEM project. * 40 Nee Soon Swamp
+Forest(NSSF) plots; see <a
+href="https://onlinelibrary.wiley.com/doi/abs/10.1111/jvs.13072">Chong
+et al. (2021)</a>. Only 21 of the 40 plots are in freshwater swamp. * 60
+‘Wong Yew Kwan’ (WYK) plots; see <a
+href="https://www.nparks.gov.sg/sbg/research/publications/gardens-bulletin-singapore/-/media/sbg/gardens-bulletin/4-4-46-2-02-y1994-v46p2-gbs-pg-37.pdf">Wong
+et al. (1994)</a> but note that only one plot in each of 60 of the
+original 62 clusters were re-established in 2022. Three of the 60 plots
+are in freshwater swamp.</p>
+<p>See the <a
+href="https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html">geospatial
+dashboard page</a> for the locations of plots.</p>
+<div id="core-data-available" class="section level2">
+<h2>Core data available</h2>
+<p>These are the vegetation data that we expect to regularly
+collect.</p>
+<ul>
+<li>Saplings/trees/big trees
+<ul>
+<li>Species</li>
+<li>Diameter (measured with tape to the nearest 0.1 cm)</li>
+<li>Position within the square sub-plot/core plot area/extended plot
+area (visually estimated to the nearest 0.5 m)</li>
+</ul></li>
+<li>Seedlings
+<ul>
+<li>Species</li>
+<li>Height (measured with tape to the nearest 0.1 cm)</li>
+</ul></li>
+</ul>
+<p>The full design is not implemented at all 160 locations. * 77 have
+sapling (1–5 cm diameter) sub-plots (10 x 10 m), * 98 have seedling
+(&gt;/= 20-cm height) quadrats (1 x 1 m, four per plot), * 128 have core
+(20 x 20 m) and extended (40 x 40 m) plot areas where trees (&gt;/= 5 cm
+diameter) and big trees (&gt;/= 30 cm diameter) were measured
+respectively.</p>
+<p>The Mandai plot set data for 2011–2015 can be accessed by installing
+the <code>Mandai</code> R package from GitHub.</p>
+<p>The Nature Parks plot set for 2011 can be accessed by installing the
+<a
+href="https://cran.r-project.org/web/packages/novelforestSG/index.html"><code>novelforestSG</code>
+R package from CRAN</a>; see also the Readme on the <a
+href="https://github.com/hrlai/novelforestSG">GitHub repository</a>.</p>
+</div>
+<div id="auxiliary-data-available" class="section level2">
+<h2>Auxiliary data available</h2>
+<ul>
+<li>One camera trap was deployed at ground-level in each of 60 Wong Yew
+Kwan plots from 2022 to 2024 and 20 Nature Parks plots from 2024 to
+2026. In selected plots with ground-level camera traps, arboreal camera
+traps were also installed.</li>
+<li>Flowering (closed flowers; open flowers) and fruiting (unripe
+fruits; ripe fruits) of selected trees of selected (40+) species were
+monitored (yes/no) every two weeks from April 2023 to March 2025.</li>
+<li>Litter was collected from four litter traps in each of 21 Wong Yew
+Kwan plots from April 2023 to September 2025 and in each of six Nature
+Parks plots from October 2024 to September 2025.</li>
+<li>Sensors logging temperature, relative humidity, and light at 30-min
+intervals were installed at selected plots.</li>
+</ul>
+<p>Data for camera traps and sensors may be temporally patchy because of
+trap/sensor failure.</p>
+</div>
+<div id="derived-data" class="section level2">
+<h2>Derived data</h2>
+<p><a
+href="https://tferp.github.io/LTFEM_public/veg_biomass.html">Biomass</a></p>
+</div>
 </div>
 
 
