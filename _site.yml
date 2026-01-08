@@ -1,20 +1,29 @@
 output_dir: docs
 
 navbar:
-    title: "Tropical Forest Ecology Research programme"
+    title: "TFER"
     left:
-        - text: "Overview"
-          href: index.html
-        - text: "Snapshots"
+        - text: "LTFEM"
           menu:
-            - text: "Plots"
-              href: LTFEM_geospatial.html
-            - text: "Phenology"
-              href: past_students.html
-            - text: "Sensors"
-              href: internships.html
-        - text: "Publications"
-          href: publications.html
+          - text: "Overview"
+            href: LTFEM.html
+          - text: "---------------"
+          - text: "Plots and trees"
+            href: LTFEM_geospatial.html
+          - text: "Camera-trapping (coming soon)"
+            #href: LTFEM_CT.html
+          - text: "Birds (coming soon)"
+            #href: LTFEM_birds.html
+          - text: "Reproductive phenology (coming soon)"
+            #href: LTFEM_phenology.html
+          - text: "Litter trapping (coming soon)"
+            #href: LTFEM_litter.html
+          - text: "Sensors (coming soon)"
+            #href: LTFEM_sensors.html
+        - text: "Bukit Timah"
+          href: BT_FDP.html
+        - text: "SBG Rain Forest"
+          href: SBG_RF.html
 
 output:
   html_document:

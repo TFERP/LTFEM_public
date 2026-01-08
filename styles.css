@@ -1,0 +1,29 @@
+blockquote {
+  font-style: italic
+}
+
+/* Prevents horizontal shifting when switching between short and long pages */
+html {
+    overflow-y: scroll;
+}
+
+/* Force all navbar items to the same vertical baseline and size */
+.navbar-nav > li > a {
+    font-size: 16px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    line-height: 20px !important;
+    display: block !important;
+}
+
+/* Fix for the dropdown toggle arrow alignment */
+.navbar-nav .dropdown-toggle .caret {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.navbar-nav li a {
+    white-space: nowrap; /* Prevents text from wrapping to a second line */
+    display: flex !important;
+    align-items: center !important;
+}

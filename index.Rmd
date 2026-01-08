@@ -1,46 +1,6 @@
 ---
-title: "Overview"
+title: ''
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-<!---Don't edit the README.md file, edit the index.Rmd file instead!--->
-
-# Long-Term Forest Ecological Monitoring project
-
-Locations of plots: https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html
-
-## Core data available
-
-These are the vegetation data that we expect to regularly collect.
-
-- Saplings/trees/big trees
-  - Species
-  - Diameter
-  - Position within the square sub-plot/core plot area/extended plot area
-- Seedlings
-  - Species
-  - Height
-
-See Er et al. (2023) and references cited within for detailed descriptions of the plot design and plot set histories. The full design is not implemented at all 160 locations; 77 have sapling (1 - 5 cm diameter) sub-plots (10 x 10 m), 98 have seedling (>/= 20-cm height) quadrats (1 x 1 m, four per plot), 128 have core (20 x 20 m) and extended (40 x 40 m) plot areas where trees (>/= 5 cm diameter) and big trees (>/= 30 cm diameter) were measured respectively.
-
-The Mandai plot set data for 2011 - 2015 can be accessed by installing the `Mandai` R package from GitHub.
-
-The Nature Parks plot set for 2011 can be accessed by installing the `novelforestSG` R package from CRAN; see also the GitHub repository.
-
-
-## Auxiliary data available
-
-- One camera trap was deployed at ground-level in each of 60 Wong Yew Kwan plots from 2022 to 2024 and 20 Nature Parks plots from 2024 to 2026. In selected plots with ground-level camera traps, arboreal camera traps were also installed.
-- Flowering (closed flowers; open flowers) and fruiting (unripe fruits; ripe fruits) of selected trees of selected (40+) species were monitored (yes/no) every two weeks from April 2023 to March 2025.
-- Litter was collected from four litter traps in each of 21 Wong Yew Kwan plots from April 2023 to September 2025 and in each of six Nature Parks plots from October 2024 to September 2025.
-- Sensors logging temperature, relative humidity, and light at 30-min intervals were installed at selected plots.
-
-Data for camera traps and sensors may be temporally patchy because of trap/sensor failure.
-
-## Derived data
-
-Biomass: https://tferp.github.io/LTFEM_public/veg_biomass.html
+The Tropical Forest Ecology Research (TFER) programme is coordinated by the Forest Ecology team at the Singapore Botanic Gardens, National Parks Board (Singapore).
