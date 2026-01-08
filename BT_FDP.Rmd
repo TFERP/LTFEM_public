@@ -1,6 +1,6 @@
 ---
-title: ''
+title: 'Bukit Timah Forest Dynamics Plots'
 output: html_document
 ---
 
-(In development, please come back later.)
+These are two 2-ha plots in the Bukit Timah Nature Reserve that are part of ForestGEO network of large permanent forest dynamics plots. See [Lum & Ngo (2021)](https://www.sciencedirect.com/science/article/abs/pii/S0006320720309058) and references cited within for an overview of insights from past research conducted within these plots. See also the [ForestGEO Bukit Timah site page](https://forestgeo.si.edu/sites/asia/bukit-timah) for more information.

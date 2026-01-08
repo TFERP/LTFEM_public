@@ -1,6 +1,8 @@
 ---
-title: ''
+title: 'Decennial census of the Singapore Botanic Gardens Rain Forest'
 output: html_document
 ---
 
-(In development, please come back later.)
+See [Turner et al. (1996)](https://conbio.onlinelibrary.wiley.com/doi/abs/10.1046/j.1523-1739.1996.10041229.x) for the background of the 'Gardens' Jungle', today called the Singapore Botanic Gardens Rain Forest. Following the first census of all trees >/= 5-cm DBH briefly described in Turner et al. (1996), subsequent recensuses were conducted in 2009–2012 and 2019–2021.
+
+More details will be provided here in the future.

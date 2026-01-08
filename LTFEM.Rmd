@@ -18,9 +18,9 @@ The Long-Term Forest Ecological Monitoring plot network consists of the followin
 * 40 Nee Soon Swamp Forest(NSSF) plots; see [Chong et al. (2021)](https://onlinelibrary.wiley.com/doi/abs/10.1111/jvs.13072). Only 21 of the 40 plots are in freshwater swamp.
 * 60 'Wong Yew Kwan' (WYK) plots; see [Wong et al. (1994)](https://www.nparks.gov.sg/sbg/research/publications/gardens-bulletin-singapore/-/media/sbg/gardens-bulletin/4-4-46-2-02-y1994-v46p2-gbs-pg-37.pdf) but note that only one plot in each of 60 of the original 62 clusters were re-established in 2022. Three of the 60 plots are in freshwater swamp.
 
-See the [geospatial dashboard page](https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html) for the locations of plots. See also [Er et al. (2023)](https://www.nparks.gov.sg/sbg/research/publications/gardens'-bulletin-singapore/-/media/sbg/gardens-bulletin/gbs_75_01_y2023/75_01_01_y2023_v7501_gbs_pg1.ashx) and references cited within for an overview of the plot set histories and plot design.
+See [Er et al. (2023)](https://www.nparks.gov.sg/sbg/research/publications/gardens'-bulletin-singapore/-/media/sbg/gardens-bulletin/gbs_75_01_y2023/75_01_01_y2023_v7501_gbs_pg1.ashx) and references cited within for an overview of the plot set histories and plot design.
 
-## Core data: trees
+# Core data: trees
 
 These are the vegetation data that we expect to regularly collect.
 
@@ -38,16 +38,20 @@ The full design is not implemented at all 160 locations.
 * 98 have seedling (>/= 20-cm height) quadrats (1 x 1 m, four per plot),
 * 128 have core (20 x 20 m) and extended (40 x 40 m) plot areas where trees (>/= 5 cm diameter) and big trees (>/= 30 cm diameter) were measured respectively.
 
+See the [geospatial dashboard page](https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html) for a map-based visualisation of the data of the trees in the plots.
+
+## Past data
+
 The Mandai plot set data for 2011–2015 can be accessed by installing the [`Mandai` R package from GitHub](https://github.com/kwekings/mandai).
 
 The Nature Parks plot set for 2011 can be accessed by installing the [`novelforestSG` R package from CRAN](https://cran.r-project.org/web/packages/novelforestSG/index.html); see also the Readme on the [GitHub repository](https://github.com/hrlai/novelforestSG).
 
-## Auxiliary data available
+# Other data available
 
 - **Camera-trapping**: One camera trap was deployed at ground-level in each of 60 WYK plots from 2022 to 2024 and 20 Nature Parks plots from 2024 to 2026. In selected plots with ground-level camera traps, arboreal camera traps were also installed.
-- 10-min point counts of **birds** were conducted at 39 WYK plots in 2022, 2023, and 2024, and 6 Nature Parks plots in 2024 and 2025, twice a year at the same plot about 1 month apart. At the first point count, an acoustic recorder was deployed to record for 10 min hourly from 7 to 10 am and 4 to 7 pm; at the second point count, the recorder was undeployed.
+- 10-min point counts of **birds** were conducted at 39 WYK plots in 2022, 2023, and 2024, and 6 Nature Parks plots in 2024 and 2025. In each year, two counts were conducted in each plot about 1 month apart. During the first count, an acoustic recorder was deployed in the plot to record for 10 min hourly from 7 to 10 am and 4 to 7 pm; during the second point count, the recorder was undeployed.
 - **Reproductive phenology**: Flowering (closed flowers; open flowers) and fruiting (unripe fruits; ripe fruits) of selected trees of selected (40+) species were monitored (yes/no) every two weeks from April 2023 to March 2025.
-- **Litter-trapping**: Litter was collected from four litter traps in each of 21 WYK plots from April 2023 to September 2025 and in each of six Nature Parks plots from October 2024 to September 2025.
+- **Litter-trapping**: Litter was collected from four litter traps in each of 21 WYK plots from April 2023 to September 2025 and in each of six Nature Parks plots from October 2024 to September 2025. Collected litter was dried and weighed; lamina were sorted into 40+ major litter-contributing species (or species groups). (Similar methodology as [Lam et al. [2022]](https://link.springer.com/article/10.1007/s10021-021-00697-7) which was conducted in ten of the NSSF plots from July 2018 to July 2019; see [data](https://github.com/kwekings/NSSF3_litter_production/blob/main/data/litterfall.csv).)
 - **Sensors** logging temperature, relative humidity, and light at 30-min intervals were installed at selected plots.
 
 Data for camera traps and sensors may be temporally patchy because of trap/sensor failure.
