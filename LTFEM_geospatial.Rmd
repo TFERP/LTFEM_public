@@ -31,7 +31,7 @@ trees_layerNames <- c("Mandai_saplings_2025",
   )
 trees <-  trees_layerNames %>%
     lapply(function(x) {
-        st_read(paste0("../LTFEM_Veg/data/classified/geospatial/", x, ".geojson")) %>%
+        st_read(paste0("../LTFEM_Veg/data/classified/geojson/", x, ".geojson")) %>%
             st_transform(4326) %>%
             mutate(radius = DBH / 200) #adjust denominator for scale
     }) %>%
@@ -61,7 +61,7 @@ rm(trees_layerNames, boundaries_layerNames)
 
 ```{r making leaflet, echo=FALSE, message=FALSE, warning=FALSE}
 leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
-    addProviderTiles(providers$OpenStreetMap.Mapnik, options = providerTileOptions(maxZoom = 30)) %>%
+    addProviderTiles(providers$Esri.WorldTopoMap, options = providerTileOptions(maxZoom = 30)) %>%
     
     # --- boundaries ---
     addPolygons(
