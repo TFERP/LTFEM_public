@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview of plots
 
-The Long-Term Forest Ecological Monitoring plot network consists of the following four sets of plots:
+The Long-Term Forest Ecological Monitoring plot network consists of the following four sets of historical plots:
 
 * 40 'Mandai storm forest' (Mandai) plots; see [Lai et al. (2022)](https://www.science.nus.edu.sg/wp-content/uploads/sites/11/2024/03/NIS_S1_207-218.pdf).
 * 20 'Nature Parks' (NatureParks) plots; see [Neo et al. (2017)](https://onlinelibrary.wiley.com/doi/abs/10.1111/avsc.12322) but note that only 20 of the 100 plots (in Bukit Batok Nature Park, Bukit Batok Town Park, Thomson Nature Park, and Windsor Nature Park) are maintained under the LTFEM project.
@@ -22,7 +22,7 @@ See [Er et al. (2023)](https://www.nparks.gov.sg/sbg/research/publications/garde
 
 # Core data: trees
 
-These are the vegetation data that we expect to regularly collect.
+These are the data that we expect to regularly collect every 4–6 years.
 
 - Saplings/trees/big trees
   - Species
@@ -40,19 +40,21 @@ The full design is not implemented at all 160 locations.
 
 See the [geospatial dashboard page](https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html) for a map-based visualisation of the data of the trees in the plots.
 
-## Past data
+## Past data associated with the plots
 
 The Mandai plot set data for 2011–2015 can be accessed by installing the [`Mandai` R package from GitHub](https://github.com/kwekings/mandai).
 
 The Nature Parks plot set for 2011 can be accessed by installing the [`novelforestSG` R package from CRAN](https://cran.r-project.org/web/packages/novelforestSG/index.html); see also the Readme on the [GitHub repository](https://github.com/hrlai/novelforestSG).
 
-# Other data available
+Plant trait measurements have been collected for many of the species that occurred in the Mandai, Nature Parks, and Nee Soon plot sets. Plant trait data is contributed to the [`SGtraits` R package, currently still in development on GitHub](https://github.com/hrlai/SGtraits).
+
+# Other data collected
 
 - **Camera-trapping**: One camera trap was deployed at ground-level in each of 60 WYK plots from 2022 to 2024 and 20 Nature Parks plots from 2024 to 2026. In selected plots with ground-level camera traps, arboreal camera traps were also installed.
 - 10-min point counts of **birds** were conducted at 39 WYK plots in 2022, 2023, and 2024, and 6 Nature Parks plots in 2024 and 2025. In each year, two counts were conducted in each plot about 1 month apart. During the first count, an acoustic recorder was deployed in the plot to record for 10 min hourly from 7 to 10 am and 4 to 7 pm; during the second point count, the recorder was undeployed.
-- **Reproductive phenology**: Flowering (closed flowers; open flowers) and fruiting (unripe fruits; ripe fruits) of selected trees of selected (40+) species were monitored (yes/no) every two weeks from April 2023 to March 2025.
-- **Litter-trapping**: Litter was collected from four litter traps in each of 21 WYK plots from April 2023 to September 2025 and in each of six Nature Parks plots from October 2024 to September 2025. Collected litter was dried and weighed; lamina were sorted into 40+ major litter-contributing species (or species groups). (Similar methodology as [Lam et al. [2022]](https://link.springer.com/article/10.1007/s10021-021-00697-7) which was conducted in ten of the NSSF plots from July 2018 to July 2019; see [data](https://github.com/kwekings/NSSF3_litter_production/blob/main/data/litterfall.csv).)
-- **Sensors** logging temperature, relative humidity, and light at 30-min intervals were installed at selected plots.
+- **Reproductive phenology**: Flowering (closed flowers; open flowers) and fruiting (unripe fruits; ripe fruits) of selected trees of selected (40+) species were monitored (yes/no) every two weeks in 21 WYK plots from April 2023 to March 2025 and six Nature Parks plots from April 2024 to March 2025. <!--- (Following similar methodology as a Final Year Project by Choo Ruisheng for a separate set of species in selected NSSF plots in 2019.)--->
+- **Litter-trapping**: Litter was collected from four litter traps in each of 21 WYK plots from April 2023 to September 2025 and in each of six Nature Parks plots from October 2024 to September 2025. Collected litter was dried and weighed; lamina were sorted into 40+ major litter-contributing species (or species groups). (Following similar methodology as [Lam et al. [2022]](https://link.springer.com/article/10.1007/s10021-021-00697-7) which was conducted in ten of the NSSF plots from July 2018 to July 2019; see [data](https://github.com/kwekings/NSSF3_litter_production/blob/main/data/litterfall.csv).)
+- **Sensors** logging temperature, relative humidity, and light at 30-min intervals were installed at selected WYK and Nature Parks plots.
 
 Data for camera traps and sensors may be temporally patchy because of trap/sensor failure.
 
