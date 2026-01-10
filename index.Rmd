@@ -3,8 +3,7 @@ title: ''
 output: html_document
 ---
 
-The
+<!--- edit the Readme.md file instead! --->
 
-# Tropical Forest Ecology Research (TFER) programme
-
-is coordinated by the Forest Ecology team at the Singapore Botanic Gardens, National Parks Board (Singapore).
+```{r, child='README.md'}
+```

@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,8 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -42,16 +40,6 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
 
 
 
@@ -259,8 +247,8 @@ $(document).ready(function () {
     </li>
     <li class="dropdown-header">Camera-trapping (coming soon)</li>
     <li class="dropdown-header">Birds (coming soon)</li>
-    <li class="dropdown-header">Reproductive phenology (coming soon)</li>
-    <li class="dropdown-header">Litter trapping (coming soon)</li>
+    <li class="dropdown-header">Phenology (coming soon)</li>
+    <li class="dropdown-header">Litter-trapping (coming soon)</li>
     <li class="dropdown-header">Sensors (coming soon)</li>
   </ul>
 </li>
@@ -296,6 +284,30 @@ insights from past research conducted within these plots. See also the
 <a href="https://forestgeo.si.edu/sites/asia/bukit-timah">ForestGEO
 Bukit Timah site page</a> for more information.</p>
 
+<button onclick="topFunction()" id="backToTop" title="Go to top">
+    <i class="fa fa-arrow-up"></i>
+        </button>
+        
+        <script>
+        // Get the button
+    var mybutton = document.getElementById("backToTop");
+    
+    // When the user scrolls down 300px from the top, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+    
+    // When the user clicks on the button, scroll to the top
+    function topFunction() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    </script>
 
 
 

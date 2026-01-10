@@ -1,5 +1,5 @@
-# LTFEM Public page
+The
 
-Geospatial dashboard: https://tferp.github.io/LTFEM_public/LTFEM_geospatial.html
+# Tropical Forest Ecology Research (TFER) programme
 
-Biomass: https://tferp.github.io/LTFEM_public/veg_biomass.html
+is coordinated by the Forest Ecology team at the Singapore Botanic Gardens, National Parks Board (Singapore).

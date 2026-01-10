@@ -1,29 +1,113 @@
+/* --- General Page Settings --- */
+
 blockquote {
-  font-style: italic
+    font-style: italic;
+    border-left: 5px solid #2d5a27; /* Added a forest green accent to blockquotes */
+    padding-left: 15px;
 }
 
-/* Prevents horizontal shifting when switching between short and long pages */
+/* Add padding to the top of the body so content isn't hidden under the sticky navbar */
+body {
+    padding-top: 70px; 
+}
+
+/* Ensure the sticky navbar stays on top of all other elements */
+.navbar-fixed-top {
+    z-index: 1030;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a subtle shadow for depth */
+}
+
+/* Smooth scrolling when clicking internal links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* footer */
+
+#backToTop {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed position */
+  bottom: 20px; /* Place it at the bottom */
+  right: 30px; /* Place it 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #2d5a27; /* Your Forest Green */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 50%; /* Make it circular */
+  font-size: 18px; /* Increase font size */
+  width: 50px;
+  height: 50px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#backToTop:hover {
+  background-color: #3e7a36; /* Lighter green on hover */
+}
+
+/* Prevents horizontal shifting (ghost scrollbar) */
 html {
     overflow-y: scroll;
 }
 
-/* Force all navbar items to the same vertical baseline and size */
-.navbar-nav > li > a {
-    font-size: 16px !important;
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
-    line-height: 20px !important;
-    display: block !important;
+/* --- Navbar Colors (Forest Theme) --- */
+
+.navbar-default {
+    background-color: #2d5a27 !important; 
+    border-color: #1e3d1a !important;
 }
 
-/* Fix for the dropdown toggle arrow alignment */
+/* Navbar text and Brand title */
+.navbar-default .navbar-nav > li > a, 
+.navbar-default .navbar-brand {
+    color: #ffffff !important;
+}
+
+/* Hover state */
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .open > a {
+    background-color: #3e7a36 !important;
+    color: #ffffff !important;
+}
+
+/* --- Navbar Layout & Alignment --- */
+
+/* Targets ONLY the top-level links (LTFEM, Bukit Timah, etc.) */
+.navbar-nav > li > a {
+    font-size: 16px !important;
+    line-height: 20px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap;
+    height: 50px; /* Standardizes height across all items */
+}
+
+/* Fixes the dropdown arrow (caret) position */
 .navbar-nav .dropdown-toggle .caret {
-    margin-left: 5px;
+    margin-left: 6px;
     vertical-align: middle;
 }
 
-.navbar-nav li a {
-    white-space: nowrap; /* Prevents text from wrapping to a second line */
-    display: flex !important;
-    align-items: center !important;
+/* --- Dropdown Menu Styling --- */
+
+/* Ensures the dropdown items look clean and don't inherit the 50px height */
+.dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid #1e3d1a;
+}
+
+.dropdown-menu > li > a {
+    padding: 10px 20px !important;
+    color: #333333 !important;
+    display: block !important; /* Standard block display for list items */
+}
+
+.dropdown-menu > li > a:hover {
+    background-color: #f5f5f5 !important;
+    color: #2d5a27 !important;
 }

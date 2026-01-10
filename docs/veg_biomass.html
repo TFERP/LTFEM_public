@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -34,8 +34,6 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -48,18 +46,119 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -347,8 +446,8 @@ div.tocify {
     </li>
     <li class="dropdown-header">Camera-trapping (coming soon)</li>
     <li class="dropdown-header">Birds (coming soon)</li>
-    <li class="dropdown-header">Reproductive phenology (coming soon)</li>
-    <li class="dropdown-header">Litter trapping (coming soon)</li>
+    <li class="dropdown-header">Phenology (coming soon)</li>
+    <li class="dropdown-header">Litter-trapping (coming soon)</li>
     <li class="dropdown-header">Sensors (coming soon)</li>
   </ul>
 </li>
@@ -385,35 +484,35 @@ div.tocify {
 
 <div id="data" class="section level1">
 <h1>Data</h1>
-<pre class="r"><code>load(&quot;../LTFEM_Veg/data/classified/dataProducts/forLTFEM_Veg_AGB/forLTFEM_Veg_AGB.RData&quot;)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;../LTFEM_Veg/data/classified/dataProducts/forLTFEM_Veg_AGB/forLTFEM_Veg_AGB.RData&quot;</span>)</span></code></pre></div>
 <p>Data from WYK plots are from surveys in 2022.</p>
 <p>Data from NSSF plots are from surveys in 2020.</p>
 <p>Data from NatureParks and Mandai plots are from surveys in 2023.</p>
 </div>
 <div id="height-dbh-models" class="section level1 tabset">
 <h1 class="tabset">Height-DBH models</h1>
-<pre class="r"><code>plotSets &lt;- c(&quot;WYK&quot;, &quot;NatureParks&quot;, &quot;NSSF&quot;)
-mods_HD &lt;- lapply(plotSets, function(s) {
-    list(nls_LL = nls(height_avg ~ a*DBH^b, data = treeHeights[[s]], start = list(a=exp(1), b = 0.5)),
-         nls_WB = nls(height_avg ~ a*(1-exp(-b*DBH^c)), data = treeHeights[[s]], start = list(a=44,b=0.05,c=0.8)),
-         nls_MM = nls(height_avg ~ (a*DBH)/(b + DBH), data = treeHeights[[s]], start = list(a=48, b = 38)))
-})
-names(mods_HD) &lt;- plotSets
-
-mods_HD_aictab &lt;- lapply(mods_HD, function(m) {
-    AICcmodavg::aictab(m)
-})
-
-DBH_minmax &lt;- lapply(treeHeights, function(df) range(df$DBH, na.rm = TRUE))</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>plotSets <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;WYK&quot;</span>, <span class="st">&quot;NatureParks&quot;</span>, <span class="st">&quot;NSSF&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>mods_HD <span class="ot">&lt;-</span> <span class="fu">lapply</span>(plotSets, <span class="cf">function</span>(s) {</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">nls_LL =</span> <span class="fu">nls</span>(height_avg <span class="sc">~</span> a<span class="sc">*</span>DBH<span class="sc">^</span>b, <span class="at">data =</span> treeHeights[[s]], <span class="at">start =</span> <span class="fu">list</span>(<span class="at">a=</span><span class="fu">exp</span>(<span class="dv">1</span>), <span class="at">b =</span> <span class="fl">0.5</span>)),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>         <span class="at">nls_WB =</span> <span class="fu">nls</span>(height_avg <span class="sc">~</span> a<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>b<span class="sc">*</span>DBH<span class="sc">^</span>c)), <span class="at">data =</span> treeHeights[[s]], <span class="at">start =</span> <span class="fu">list</span>(<span class="at">a=</span><span class="dv">44</span>,<span class="at">b=</span><span class="fl">0.05</span>,<span class="at">c=</span><span class="fl">0.8</span>)),</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>         <span class="at">nls_MM =</span> <span class="fu">nls</span>(height_avg <span class="sc">~</span> (a<span class="sc">*</span>DBH)<span class="sc">/</span>(b <span class="sc">+</span> DBH), <span class="at">data =</span> treeHeights[[s]], <span class="at">start =</span> <span class="fu">list</span>(<span class="at">a=</span><span class="dv">48</span>, <span class="at">b =</span> <span class="dv">38</span>)))</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>})</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="fu">names</span>(mods_HD) <span class="ot">&lt;-</span> plotSets</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>mods_HD_aictab <span class="ot">&lt;-</span> <span class="fu">lapply</span>(mods_HD, <span class="cf">function</span>(m) {</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    AICcmodavg<span class="sc">::</span><span class="fu">aictab</span>(m)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>})</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>DBH_minmax <span class="ot">&lt;-</span> <span class="fu">lapply</span>(treeHeights, <span class="cf">function</span>(df) <span class="fu">range</span>(df<span class="sc">$</span>DBH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>WYK plots:</p>
-<pre class="r"><code>mods_HD_aictab$WYK %&gt;%
-  data.frame(row.names = NULL) %&gt;%
-  select(-c(AICc, Cum.Wt, LL)) %&gt;%
-  rename(Model = Modnames, 
-         k = K,
-         &quot;Δ AICc&quot; = Delta_AICc,
-         L = ModelLik, 
-         w = AICcWt)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>mods_HD_aictab<span class="sc">$</span>WYK <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(AICc, Cum.Wt, LL)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Model =</span> Modnames, </span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>         <span class="at">k =</span> K,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>         <span class="st">&quot;Δ AICc&quot;</span> <span class="ot">=</span> Delta_AICc,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>         <span class="at">L =</span> ModelLik, </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>         <span class="at">w =</span> AICcWt)</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -451,14 +550,14 @@ DBH_minmax &lt;- lapply(treeHeights, function(df) range(df$DBH, na.rm = TRUE))</
 </table>
 </div>
 <p>Nature Parks:</p>
-<pre class="r"><code>mods_HD_aictab$NatureParks %&gt;%
-  data.frame(row.names = NULL) %&gt;%
-  select(-c(AICc, Cum.Wt, LL)) %&gt;%
-  rename(Model = Modnames, 
-         k = K,
-         &quot;Δ AICc&quot; = Delta_AICc,
-         L = ModelLik, 
-         w = AICcWt)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>mods_HD_aictab<span class="sc">$</span>NatureParks <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(AICc, Cum.Wt, LL)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Model =</span> Modnames, </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>         <span class="at">k =</span> K,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>         <span class="st">&quot;Δ AICc&quot;</span> <span class="ot">=</span> Delta_AICc,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>         <span class="at">L =</span> ModelLik, </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>         <span class="at">w =</span> AICcWt)</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -496,14 +595,14 @@ DBH_minmax &lt;- lapply(treeHeights, function(df) range(df$DBH, na.rm = TRUE))</
 </table>
 </div>
 <p>Nee Soon:</p>
-<pre class="r"><code>mods_HD_aictab$NSSF %&gt;%
-  data.frame(row.names = NULL) %&gt;%
-  select(-c(AICc, Cum.Wt, LL)) %&gt;%
-  rename(Model = Modnames, 
-         k = K,
-         &quot;Δ AICc&quot; = Delta_AICc,
-         L = ModelLik, 
-         w = AICcWt)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>mods_HD_aictab<span class="sc">$</span>NSSF <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(AICc, Cum.Wt, LL)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Model =</span> Modnames, </span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>         <span class="at">k =</span> K,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>         <span class="st">&quot;Δ AICc&quot;</span> <span class="ot">=</span> Delta_AICc,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>         <span class="at">L =</span> ModelLik, </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>         <span class="at">w =</span> AICcWt)</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -548,12 +647,12 @@ a&#39; + b \log D\)</span> where <span class="math inline">\(a&#39; =
 \log a\)</span>)</p>
 <p>where H is the height of the tree in metres and D is the diameter at
 the point of measurement in cm.</p>
-<pre class="r"><code>sapply(mods_HD, function(m) {
-    m$nls_LL$m$getPars()
-}) %&gt;%
-    t() %&gt;%
-    data.frame() %&gt;%
-    rownames_to_column(var = &quot;Plot set&quot;)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">sapply</span>(mods_HD, <span class="cf">function</span>(m) {</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    m<span class="sc">$</span>nls_LL<span class="sc">$</span>m<span class="sc">$</span><span class="fu">getPars</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Plot set&quot;</span>)</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -582,40 +681,40 @@ the point of measurement in cm.</p>
 </tbody>
 </table>
 </div>
-<pre class="r"><code>mods_HD_pred_LL &lt;- lapply(plotSets, function(s) {
-    D_new &lt;- seq(DBH_minmax[[s]][1],
-                 DBH_minmax[[s]][2],
-                 length.out = 1000)
-    
-    data.frame(D = D_new,
-               fit = predict(mods_HD[[s]]$nls_LL,
-                        newdata = data.frame(DBH = D_new)))
-})
-names(mods_HD_pred_LL) &lt;- plotSets
-
-ggplot() +
-    theme_classic() +
-    geom_point(data = treeHeights$WYK,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;darkgreen&quot;) +
-    geom_line(data = mods_HD_pred_LL[[&quot;WYK&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;darkgreen&quot;) +
-    geom_point(data = treeHeights$NatureParks,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;red&quot;) +
-    geom_line(data = mods_HD_pred_LL[[&quot;NatureParks&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;red&quot;) +
-    geom_point(data = treeHeights$NSSF,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;blue&quot;) +
-    geom_line(data = mods_HD_pred_LL[[&quot;NSSF&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;blue&quot;) +
-    scale_y_continuous(trans = &quot;log10&quot;) +
-    scale_x_continuous(trans = &quot;log10&quot;) +
-    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>mods_HD_pred_LL <span class="ot">&lt;-</span> <span class="fu">lapply</span>(plotSets, <span class="cf">function</span>(s) {</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    D_new <span class="ot">&lt;-</span> <span class="fu">seq</span>(DBH_minmax[[s]][<span class="dv">1</span>],</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                 DBH_minmax[[s]][<span class="dv">2</span>],</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">D =</span> D_new,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>               <span class="at">fit =</span> <span class="fu">predict</span>(mods_HD[[s]]<span class="sc">$</span>nls_LL,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                        <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DBH =</span> D_new)))</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>})</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="fu">names</span>(mods_HD_pred_LL) <span class="ot">&lt;-</span> plotSets</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>WYK,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_LL[[<span class="st">&quot;WYK&quot;</span>]],</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NatureParks,</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_LL[[<span class="st">&quot;NatureParks&quot;</span>]],</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NSSF,</span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_LL[[<span class="st">&quot;NSSF&quot;</span>]],</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;DBH (cm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Height (m)&quot;</span>)</span></code></pre></div>
 <p><img src="veg_biomass_files/figure-html/plot%20log-log-1.png" width="672" /></p>
 </div>
 <div id="weilbull" class="section level2">
@@ -625,16 +724,16 @@ ggplot() +
 e^{-(D/\beta)^\gamma})\)</span></p>
 <p>where H is the height of the tree in metres and D is the diameter at
 the point of measurement in cm.</p>
-<pre class="r"><code>sapply(mods_HD, function(m) {
-    m$nls_WB$m$getPars()
-}) %&gt;%
-    t() %&gt;%
-    data.frame() %&gt;%
-    rownames_to_column(var = &quot;Plot set&quot;) %&gt;%
-    rename(`$\\alpha$` = &quot;a&quot;,
-           &quot;$\\beta$&quot; = &quot;b&quot;,
-           &quot;$\\gamma$&quot; = &quot;c&quot;) %&gt;%
-    knitr::kable()</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">sapply</span>(mods_HD, <span class="cf">function</span>(m) {</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    m<span class="sc">$</span>nls_WB<span class="sc">$</span>m<span class="sc">$</span><span class="fu">getPars</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Plot set&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">alpha$</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;a&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>           <span class="st">&quot;$</span><span class="sc">\\</span><span class="st">beta$&quot;</span> <span class="ot">=</span> <span class="st">&quot;b&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>           <span class="st">&quot;$</span><span class="sc">\\</span><span class="st">gamma$&quot;</span> <span class="ot">=</span> <span class="st">&quot;c&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -665,40 +764,40 @@ the point of measurement in cm.</p>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>mods_HD_pred_WB &lt;- lapply(plotSets, function(s) {
-    D_new &lt;- seq(DBH_minmax[[s]][1],
-                 DBH_minmax[[s]][2],
-                 length.out = 1000)
-    
-    data.frame(D = D_new,
-               fit = predict(mods_HD[[s]]$nls_WB,
-                        newdata = data.frame(DBH = D_new)))
-})
-names(mods_HD_pred_WB) &lt;- plotSets
-
-ggplot() +
-    theme_classic() +
-    geom_point(data = treeHeights$WYK,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;darkgreen&quot;) +
-    geom_line(data = mods_HD_pred_WB[[&quot;WYK&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;darkgreen&quot;) +
-    geom_point(data = treeHeights$NatureParks,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;red&quot;) +
-    geom_line(data = mods_HD_pred_WB[[&quot;NatureParks&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;red&quot;) +
-    geom_point(data = treeHeights$NSSF,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;blue&quot;) +
-    geom_line(data = mods_HD_pred_WB[[&quot;NSSF&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;blue&quot;) +
-    scale_y_continuous(trans = &quot;log10&quot;) +
-    scale_x_continuous(trans = &quot;log10&quot;) +
-    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>mods_HD_pred_WB <span class="ot">&lt;-</span> <span class="fu">lapply</span>(plotSets, <span class="cf">function</span>(s) {</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    D_new <span class="ot">&lt;-</span> <span class="fu">seq</span>(DBH_minmax[[s]][<span class="dv">1</span>],</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                 DBH_minmax[[s]][<span class="dv">2</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    </span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">D =</span> D_new,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>               <span class="at">fit =</span> <span class="fu">predict</span>(mods_HD[[s]]<span class="sc">$</span>nls_WB,</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>                        <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DBH =</span> D_new)))</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>})</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="fu">names</span>(mods_HD_pred_WB) <span class="ot">&lt;-</span> plotSets</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>WYK,</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_WB[[<span class="st">&quot;WYK&quot;</span>]],</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NatureParks,</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_WB[[<span class="st">&quot;NatureParks&quot;</span>]],</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NSSF,</span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_WB[[<span class="st">&quot;NSSF&quot;</span>]],</span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;DBH (cm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Height (m)&quot;</span>)</span></code></pre></div>
 <p><img src="veg_biomass_files/figure-html/plot%20weibull-1.png" width="672" /></p>
 </div>
 <div id="michaelis-menten" class="section level2">
@@ -707,13 +806,13 @@ ggplot() +
 <p><span class="math inline">\(H = (A \times D)/(B + D)\)</span></p>
 <p>where H is the height of the tree in metres and D is the diameter at
 the point of measurement in cm.</p>
-<pre class="r"><code>sapply(mods_HD, function(m) {
-    m$nls_MM$m$getPars()
-}) %&gt;%
-    t() %&gt;%
-    data.frame() %&gt;%
-    rownames_to_column(var = &quot;Plot set&quot;) %&gt;%
-    rename(A = a, B = b)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">sapply</span>(mods_HD, <span class="cf">function</span>(m) {</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    m<span class="sc">$</span>nls_MM<span class="sc">$</span>m<span class="sc">$</span><span class="fu">getPars</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;Plot set&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">A =</span> a, <span class="at">B =</span> b)</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -742,55 +841,55 @@ the point of measurement in cm.</p>
 </tbody>
 </table>
 </div>
-<pre class="r"><code>mods_HD_pred_MM &lt;- lapply(plotSets, function(s) {
-    D_new &lt;- seq(DBH_minmax[[s]][1],
-                 DBH_minmax[[s]][2],
-                 length.out = 1000)
-    
-    data.frame(D = D_new,
-               fit = predict(mods_HD[[s]]$nls_MM,
-                        newdata = data.frame(DBH = D_new)))
-})
-names(mods_HD_pred_MM) &lt;- plotSets
-
-ggplot() +
-    theme_classic() +
-    geom_point(data = treeHeights$WYK,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;darkgreen&quot;) +
-    geom_line(data = mods_HD_pred_MM[[&quot;WYK&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;darkgreen&quot;) +
-    geom_point(data = treeHeights$NatureParks,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;red&quot;) +
-    geom_line(data = mods_HD_pred_MM[[&quot;NatureParks&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;red&quot;) +
-    geom_point(data = treeHeights$NSSF,
-               mapping = aes(x = DBH, y = height_avg),
-               color = &quot;blue&quot;) +
-    geom_line(data = mods_HD_pred_MM[[&quot;NSSF&quot;]],
-              mapping = aes(x = D, y = fit),
-              color = &quot;blue&quot;) +
-    scale_y_continuous(trans = &quot;log10&quot;) +
-    scale_x_continuous(trans = &quot;log10&quot;) +
-    labs(x = &quot;DBH (cm)&quot;, y = &quot;Height (m)&quot;)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>mods_HD_pred_MM <span class="ot">&lt;-</span> <span class="fu">lapply</span>(plotSets, <span class="cf">function</span>(s) {</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    D_new <span class="ot">&lt;-</span> <span class="fu">seq</span>(DBH_minmax[[s]][<span class="dv">1</span>],</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                 DBH_minmax[[s]][<span class="dv">2</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    </span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">D =</span> D_new,</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>               <span class="at">fit =</span> <span class="fu">predict</span>(mods_HD[[s]]<span class="sc">$</span>nls_MM,</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>                        <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">DBH =</span> D_new)))</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>})</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="fu">names</span>(mods_HD_pred_MM) <span class="ot">&lt;-</span> plotSets</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>WYK,</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_MM[[<span class="st">&quot;WYK&quot;</span>]],</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NatureParks,</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_MM[[<span class="st">&quot;NatureParks&quot;</span>]],</span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> treeHeights<span class="sc">$</span>NSSF,</span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DBH, <span class="at">y =</span> height_avg),</span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> mods_HD_pred_MM[[<span class="st">&quot;NSSF&quot;</span>]],</span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> D, <span class="at">y =</span> fit),</span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;DBH (cm)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Height (m)&quot;</span>)</span></code></pre></div>
 <p><img src="veg_biomass_files/figure-html/plot%20M-M-1.png" width="672" /></p>
 </div>
 </div>
 <div id="calculate-aboveground-biomass" class="section level1">
 <h1>Calculate aboveground biomass</h1>
-<pre class="r"><code>source(&quot;../LTFEM_Veg_AGB/scripts/veg_biomass.R&quot;)</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;../LTFEM_Veg_AGB/scripts/veg_biomass.R&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning in par(oldpar): calling par(new=TRUE) with no plot
 ## Warning in par(oldpar): calling par(new=TRUE) with no plot</code></pre>
 <pre><code>## The reference dataset contains 16467 wood density values</code></pre>
 <pre><code>## Your taxonomic table contains 568 taxa</code></pre>
 <pre><code>## The reference dataset contains 16467 wood density values</code></pre>
 <pre><code>## Your taxonomic table contains 269 taxa</code></pre>
-<pre class="r"><code>knitr::kable(plots_AGBsum, &quot;html&quot;) %&gt;%
-    kableExtra::kable_styling(&quot;striped&quot;) %&gt;%
-    kableExtra::scroll_box(height = &quot;500px&quot;, width = &quot;100%&quot;)</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(plots_AGBsum, <span class="st">&quot;html&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">&quot;500px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>)</span></code></pre></div>
 <div
 style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
@@ -2593,14 +2692,38 @@ WYK
 </table>
 </div>
 <p>Note: there were no big trees in AQ5.</p>
-<pre class="r"><code>ggplot(data = plots_AGBsum) +
-    geom_point(mapping = aes(y = trees, x = bigTrees, col = plotSet)) +
-    scale_y_continuous(trans = &quot;log10&quot;) +
-    scale_x_continuous(trans = &quot;log10&quot;) +
-    geom_abline(intercept = 0, slope = 1)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plots_AGBsum) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> trees, <span class="at">x =</span> bigTrees, <span class="at">col =</span> plotSet)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="veg_biomass_files/figure-html/plot%20tree%20vs%20bigtree-1.png" width="672" /></p>
 </div>
 
+<button onclick="topFunction()" id="backToTop" title="Go to top">
+    <i class="fa fa-arrow-up"></i>
+        </button>
+        
+        <script>
+        // Get the button
+    var mybutton = document.getElementById("backToTop");
+    
+    // When the user scrolls down 300px from the top, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+    
+    // When the user clicks on the button, scroll to the top
+    function topFunction() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    </script>
 
 
 </div>

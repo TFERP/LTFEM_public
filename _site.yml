@@ -2,6 +2,8 @@ output_dir: docs
 
 navbar:
     title: "TFER"
+    type: default
+    fixed_top: yes
     left:
         - text: "LTFEM"
           menu:
@@ -14,9 +16,9 @@ navbar:
             #href: LTFEM_CT.html
           - text: "Birds (coming soon)"
             #href: LTFEM_birds.html
-          - text: "Reproductive phenology (coming soon)"
+          - text: "Phenology (coming soon)"
             #href: LTFEM_phenology.html
-          - text: "Litter trapping (coming soon)"
+          - text: "Litter-trapping (coming soon)"
             #href: LTFEM_litter.html
           - text: "Sensors (coming soon)"
             #href: LTFEM_sensors.html
@@ -27,7 +29,8 @@ navbar:
 
 output:
   html_document:
-    theme: default
-    highlight: default
-    include:
+    theme: flatly
+    highlight: tango
     css: styles.css
+    includes:
+        after_body: footer.html
