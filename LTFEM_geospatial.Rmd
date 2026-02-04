@@ -27,7 +27,7 @@ trees_layerNames <- c("Mandai_saplings_2025",
   )
 trees <-  trees_layerNames %>%
     lapply(function(x) {
-        st_read(paste0("../LTFEM_Veg/data/classified/geospatial/", x, ".geojson")) %>%
+        st_read(paste0("../LTFEM_Veg/data/classified/geojson/", x, ".geojson")) %>%
             st_transform(4326) %>%
             mutate(radius = DBH / 200) #adjust denominator for scale
     }) %>%
