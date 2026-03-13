@@ -132,13 +132,23 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     addPolygons(
         data = seedlings$WYK_quadrat_boundaries_reprojected, #take note that data is extracted from seedlings instead of boundaries
-        color = "black",
+        color = "red",
         weight = 2,
         fill = TRUE,
         group = "WYK Seedling Plots",
         popup =  ~paste0("<b>Quadrat ID:</b>", quadratID,
                          "<br><b>Species:</b>", seedlings)
     ) %>% 
+    
+        addPolygons(
+        data = seedlings$NSSF_quadrat_boundaries_reprojected, #take note that data is extracted from seedlings instead of boundaries
+        color = "red",
+        weight = 2,
+        fill = TRUE,
+        group = "NSSF Seedling Plots",
+        popup =  ~paste0("<b>Quadrat ID:</b>", quadratID,
+                         "<br><b>Species:</b>", seedlings)
+        ) %>% 
     
     addPolygons(
         data = boundaries$NSSF_extendedPlot_boundaries_reprojected,
@@ -367,7 +377,8 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     #         "<br><b>DBH:</b> ", round(DBH, 1), " cm"
     #     )
     # ) %>%
-    
+
+
     # --- 3. Layer control toggle ---
     addLayersControl(
         overlayGroups = c("Mandai Saplings", "Mandai Trees", "Mandai Big Trees",
@@ -375,7 +386,7 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
                           "WYK Saplings", "WYK Trees", "WYK Big Trees",
                           "WYK Seedling Plots", "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots",
                           "NSSF Saplings", "NSSF Trees", "NSSF Big Trees",
-                          "NSSF 10x10 Plots", "NSSF 20x20 Plots", "NSSF 40x40 Plots",
+                          "NSSF Seedling Plots", "NSSF 10x10 Plots", "NSSF 20x20 Plots", "NSSF 40x40 Plots",
                           #"Natureparks Saplings", 
                           "Natureparks Trees", "Natureparks Big Trees",
                           #"Natureparks 10x10 Plots", 
@@ -385,9 +396,9 @@ leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     
     # --- 4. Add a legend for DBH ---
     addLegend(
-        colors = c("blue", "darkgreen", "orange"),
-        labels = c( "Saplings", "Trees", "Big Trees"),
-        position = "bottomright",
+        colors = c("red","blue", "darkgreen", "orange"),
+        labels = c( "Seedlings", "Saplings", "Trees", "Big Trees"),
+        position = "topright",
         title = "Legend"
     )
 ```
