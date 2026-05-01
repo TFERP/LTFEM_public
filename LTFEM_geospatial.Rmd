@@ -32,11 +32,20 @@ trees_layerNames <- c("Mandai_saplings_2025",
   )
 trees <-  trees_layerNames %>%
     lapply(function(x) {
-        st_read(paste0("../LTFEM_Veg/data/classified/geospatial/", x, ".geojson")) %>%
+        st_read(paste0("../LTFEM_Veg/data/classified/geojson/", x, ".geojson")) %>%
             st_transform(4326) %>%
             mutate(radius = DBH / 200) #adjust denominator for scale
     }) %>%
     set_names(trees_layerNames)
+
+seedlings_layerNames <- c("WYK_quadrat_boundaries_reprojected", #saved in classified folder
+  "NSSF_quadrat_boundaries_reprojected")                        #contains seedlings data
+seedlings <- seedlings_layerNames %>% 
+    lapply(function(x) {
+        st_read(paste0("../LTFEM_Veg/data/classified/geojson/", x, ".geojson")) %>% 
+                    st_transform(4326)
+    }) %>%
+    set_names(seedlings_layerNames)
 
 boundaries_layerNames <-c("Mandai_subplot_boundaries_reprojected",
   "Mandai_corePlot_boundaries_reprojected",
@@ -56,7 +65,7 @@ boundaries <- boundaries_layerNames %>%
     }) %>%
     set_names(boundaries_layerNames)
 
-rm(trees_layerNames, boundaries_layerNames)
+rm(trees_layerNames, seedlings_layerNames, boundaries_layerNames)
 ```
 
 
@@ -125,6 +134,26 @@ leaflet(height = "80vh", options = leafletOptions(maxZoom = 30, minZoom = 12)) %
         group = "WYK 10x10 Plots",
         popup = ~ paste0("<b>Plot ID:</b> ", plotID)
     ) %>%
+    
+    addPolygons(
+        data = seedlings$WYK_quadrat_boundaries_reprojected, #take note that data is extracted from seedlings instead of boundaries
+        color = "red",
+        weight = 2,
+        fill = TRUE,
+        group = "WYK Seedling Plots",
+        popup =  ~paste0("<b>Quadrat ID:</b>", quadratID,
+                         "<br><b>Species:</b>", seedlings)
+    ) %>% 
+    
+        addPolygons(
+        data = seedlings$NSSF_quadrat_boundaries_reprojected, #take note that data is extracted from seedlings instead of boundaries
+        color = "red",
+        weight = 2,
+        fill = TRUE,
+        group = "NSSF Seedling Plots",
+        popup =  ~paste0("<b>Quadrat ID:</b>", quadratID,
+                         "<br><b>Species:</b>", seedlings)
+        ) %>% 
     
     addPolygons(
         data = boundaries$NSSF_extendedPlot_boundaries_reprojected,
@@ -353,15 +382,16 @@ leaflet(height = "80vh", options = leafletOptions(maxZoom = 30, minZoom = 12)) %
     #         "<br><b>DBH:</b> ", round(DBH, 1), " cm"
     #     )
     # ) %>%
-    
+
+
     # --- 3. Layer control toggle ---
     addLayersControl(
         overlayGroups = c("Mandai Saplings", "Mandai Trees", "Mandai Big Trees",
                           "Mandai 10x10 Plots", "Mandai 20x20 Plots", "Mandai 40x40 Plots",
                           "WYK Saplings", "WYK Trees", "WYK Big Trees",
-                          "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots",
+                          "WYK Seedling Plots", "WYK 10x10 Plots", "WYK 20x20 Plots", "WYK 40x40 Plots",
                           "NSSF Saplings", "NSSF Trees", "NSSF Big Trees",
-                          "NSSF 10x10 Plots", "NSSF 20x20 Plots", "NSSF 40x40 Plots",
+                          "NSSF Seedling Plots", "NSSF 10x10 Plots", "NSSF 20x20 Plots", "NSSF 40x40 Plots",
                           #"Natureparks Saplings", 
                           "Natureparks Trees", "Natureparks Big Trees",
                           #"Natureparks 10x10 Plots", 
@@ -371,9 +401,9 @@ leaflet(height = "80vh", options = leafletOptions(maxZoom = 30, minZoom = 12)) %
     
     # --- 4. Add a legend for DBH ---
     addLegend(
-        colors = c("blue", "darkgreen", "orange"),
-        labels = c( "Saplings", "Trees", "Big Trees"),
-        position = "bottomright",
+        colors = c("red","blue", "darkgreen", "orange"),
+        labels = c( "Seedlings", "Saplings", "Trees", "Big Trees"),
+        position = "topright",
         title = "Legend"
     )
 ```
