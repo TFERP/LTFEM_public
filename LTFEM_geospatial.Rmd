@@ -1,9 +1,14 @@
 ---
-title: "LTFEM plots and trees"
 output:
   html_document:
     df_print: kable
 ---
+
+```{css, echo=FALSE}
+.main-container { max-width: 100% !important; padding: 0 10%; }
+body { margin: 0; overflow: hidden; }
+.leaflet-container { width: 100% !important; }
+```
 
 ```{r load libraries and files, include=FALSE}
 #Load libraries ----
@@ -63,7 +68,7 @@ rm(trees_layerNames, boundaries_layerNames)
 #   style = "height: 600px;"
 # )
 
-leaflet(options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
+leaflet(height = "80vh", options = leafletOptions(maxZoom = 30, minZoom = 12)) %>%
     addProviderTiles(providers$Esri.WorldTopoMap, options = providerTileOptions(maxZoom = 30)) %>%
     
     # --- boundaries ---
