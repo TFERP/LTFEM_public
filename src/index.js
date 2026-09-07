@@ -6,6 +6,7 @@ import { Issuer, generators } from 'openid-client';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3000;
+const SESSION_MAX_AGE_DAYS = Number(process.env.SESSION_MAX_AGE_DAYS || 1);
 
 const {
   ENTRA_TENANT_ID,
@@ -43,7 +44,12 @@ app.use(
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, secure: true, sameSite: 'lax' },
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: SESSION_MAX_AGE_DAYS * 24 * 60 * 60 * 1000,
+    },
   })
 );
 
