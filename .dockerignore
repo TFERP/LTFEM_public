@@ -1,0 +1,14 @@
+.git
+*.Rmd
+*.Rproj
+.Rproj.user
+*.md
+.gitignore
+_site.yml
+footer.html
+styles.css
+.DS_Store
+.vscode
+node_modules
+.env
+.env.*
